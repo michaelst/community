@@ -6,6 +6,7 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "macos": "react-native run-macos",
     "web": "webpack serve --mode development --env development",
     "start": "react-native start",
     "test": "jest",
