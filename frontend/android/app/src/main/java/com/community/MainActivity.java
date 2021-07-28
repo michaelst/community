@@ -1,4 +1,4 @@
-package com.community;
+package media.fiftyseven.community;
 
 import com.facebook.react.ReactActivity;
 
