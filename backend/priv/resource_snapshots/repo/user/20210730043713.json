@@ -1,0 +1,88 @@
+{
+  "attributes": [
+    {
+      "allow_nil?": false,
+      "default": "nil",
+      "generated?": false,
+      "name": "id",
+      "primary_key?": true,
+      "references": null,
+      "type": "uuid"
+    },
+    {
+      "allow_nil?": false,
+      "default": "nil",
+      "generated?": false,
+      "name": "firebase_id",
+      "primary_key?": false,
+      "references": null,
+      "type": "text"
+    },
+    {
+      "allow_nil?": false,
+      "default": "false",
+      "generated?": false,
+      "name": "approved",
+      "primary_key?": false,
+      "references": null,
+      "type": "boolean"
+    },
+    {
+      "allow_nil?": false,
+      "default": "false",
+      "generated?": false,
+      "name": "owner",
+      "primary_key?": false,
+      "references": null,
+      "type": "boolean"
+    },
+    {
+      "allow_nil?": false,
+      "default": "nil",
+      "generated?": false,
+      "name": "unit",
+      "primary_key?": false,
+      "references": null,
+      "type": "text"
+    },
+    {
+      "allow_nil?": false,
+      "default": "fragment(\"now()\")",
+      "generated?": false,
+      "name": "inserted_at",
+      "primary_key?": false,
+      "references": null,
+      "type": "utc_datetime_usec"
+    },
+    {
+      "allow_nil?": false,
+      "default": "fragment(\"now()\")",
+      "generated?": false,
+      "name": "updated_at",
+      "primary_key?": false,
+      "references": null,
+      "type": "utc_datetime_usec"
+    }
+  ],
+  "base_filter": null,
+  "check_constraints": [],
+  "has_create_action": true,
+  "hash": "46FB03FAD3E27E09E728E0198F6F5FF38715578B08CAA530EF03E6F1AFBAD332",
+  "identities": [
+    {
+      "base_filter": null,
+      "index_name": "user_firebase_id_index",
+      "keys": [
+        "firebase_id"
+      ],
+      "name": "firebase_id"
+    }
+  ],
+  "multitenancy": {
+    "attribute": null,
+    "global": null,
+    "strategy": null
+  },
+  "repo": "Elixir.Community.Repo",
+  "table": "user"
+}
