@@ -8,33 +8,26 @@
  * @format
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import {
   SafeAreaView,
-  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
   useColorScheme,
   View,
-} from 'react-native';
-
-import {
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+} from 'react-native'
 
 import Colors from './Colors'
 
 import auth from '@react-native-firebase/auth'
-import { AppleButton, appleAuth } from '@invertase/react-native-apple-authentication'
+import Login from './screens/Login/Login'
+import Announcements from './screens/Announcements/Announcements'
 
 const Section: React.FC<{
-  title: string;
+  title: string
 }> = ({ children, title }) => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const isDarkMode = useColorScheme() === 'dark'
   return (
     <View style={styles.sectionContainer}>
       <Text
@@ -56,27 +49,7 @@ const Section: React.FC<{
         {children}
       </Text>
     </View>
-  );
-};
-
-async function onAppleButtonPress() {
-  // Start the sign-in request
-  const appleAuthRequestResponse = await appleAuth.performRequest({
-    requestedOperation: appleAuth.Operation.LOGIN,
-    requestedScopes: [],
-  });
-
-  // Ensure Apple returned a user identityToken
-  if (!appleAuthRequestResponse.identityToken) {
-    throw 'Apple Sign-In failed - no identify token returned';
-  }
-
-  // Create a Firebase credential from the response
-  const { identityToken, nonce } = appleAuthRequestResponse;
-  const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
-
-  // Sign the user in with the credential
-  return auth().signInWithCredential(appleCredential);
+  )
 }
 
 const App = () => {
@@ -89,10 +62,9 @@ const App = () => {
   }
 
   useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
+    return subscriber // unsubscribe on unmount
   }, [])
-
 
   const isDarkMode = useColorScheme() === 'dark'
 
@@ -103,63 +75,21 @@ const App = () => {
   if (initializing) return null
 
   if (!user) {
-    return (
-      <SafeAreaView style={backgroundStyle}>
-        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={backgroundStyle}>
-          <View
-            style={{
-              backgroundColor: isDarkMode ? Colors.black : Colors.white,
-            }}>
-            <Section title="Login">
-              <AppleButton
-                buttonStyle={AppleButton.Style.WHITE}
-                buttonType={AppleButton.Type.SIGN_IN}
-                style={{
-                  width: 160,
-                  height: 45,
-                }}
-                onPress={() => onAppleButtonPress().then(() => console.log('Apple sign-in complete!'))}
-              />
-            </Section>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    )
+    return <Login />
   }
 
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
+      <View
+        style={{
+          backgroundColor: isDarkMode ? Colors.black : Colors.white,
+        }}>
+          {!user ? <Login /> : <Announcements />}
+      </View>
     </SafeAreaView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   sectionContainer: {
@@ -178,6 +108,6 @@ const styles = StyleSheet.create({
   highlight: {
     fontWeight: '700',
   },
-});
+})
 
-export default App;
+export default App
