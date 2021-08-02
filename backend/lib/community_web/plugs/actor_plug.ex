@@ -16,7 +16,7 @@ defmodule CommunityWeb.ActorPlug do
   end
 
   defp build_context(conn) do
-    with ["" <> token] <- get_req_header(conn, "authorization"),
+    with ["Bearer " <> token] <- get_req_header(conn, "authorization"),
          {:ok, user, _claims} <- Community.Guardian.resource_from_token(token) do
       {:ok, %{actor: user}}
     end

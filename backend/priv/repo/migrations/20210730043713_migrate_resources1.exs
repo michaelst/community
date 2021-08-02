@@ -13,7 +13,7 @@ defmodule Community.Repo.Migrations.MigrateResources1 do
       add :firebase_id, :text, null: false
       add :approved, :boolean, null: false, default: false
       add :owner, :boolean, null: false, default: false
-      add :unit, :text, null: false
+      add :unit, :text
       add :inserted_at, :utc_datetime_usec, null: false, default: fragment("now()")
       add :updated_at, :utc_datetime_usec, null: false, default: fragment("now()")
     end

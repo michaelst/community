@@ -14,10 +14,15 @@ defmodule Community.Announcement do
     uuid_primary_key :id
 
     attribute :body, :string, allow_nil?: false
-    attribute :renter_viewable, :boolean, allow_nil?: false, default: false
+    attribute :renter_viewable, :boolean, allow_nil?: false, default: false, private?: true
 
-    create_timestamp :inserted_at
-    update_timestamp :updated_at
+    timestamps()
+  end
+
+  actions do
+    read :read do
+      filter expr(renter_viewable == true or ^actor(:owner) == true)
+    end
   end
 
   graphql do

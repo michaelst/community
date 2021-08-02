@@ -13,13 +13,12 @@ defmodule Community.User do
   attributes do
     uuid_primary_key :id
 
-    attribute :firebase_id, :string, allow_nil?: false
-    attribute :approved, :boolean, allow_nil?: false, default: false
-    attribute :owner, :boolean, allow_nil?: false, default: false
-    attribute :unit, :string, allow_nil?: false
+    attribute :approved, :boolean, allow_nil?: false, default: false, private?: true
+    attribute :firebase_id, :string, allow_nil?: false, private?: true
+    attribute :owner, :boolean, allow_nil?: false, default: false, private?: true
+    attribute :unit, :string
 
-    create_timestamp :inserted_at
-    update_timestamp :updated_at
+    timestamps()
   end
 
   identities do

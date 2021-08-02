@@ -27,7 +27,6 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 config :community, Community.Guardian,
-  issuer: "https://securetoken.google.com/community",
   verify_issuer: true,
   allowed_algos: ["RS256"],
   secret_fetcher: Community.Guardian.KeyServer
