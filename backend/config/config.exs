@@ -8,7 +8,8 @@
 use Mix.Config
 
 config :community,
-  ecto_repos: [Community.Repo]
+  ecto_repos: [Community.Repo],
+  ash_apis: [Community.Api]
 
 # Configures the endpoint
 config :community, CommunityWeb.Endpoint,

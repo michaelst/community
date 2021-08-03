@@ -36,6 +36,7 @@ defmodule Community.MixProject do
     [
       {:absinthe_plug, "~> 1.5"},
       {:ash_graphql, "~> 0.16"},
+      {:ash_policy_authorizer, "~> 0.16"},
       {:ash_postgres, "~> 0.40"},
       {:ash, "~> 1.47.5"},
       {:castore, "~> 0.1"},
@@ -61,6 +62,7 @@ defmodule Community.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
+      "ash.gen.migrations": ["ash_postgres.generate_migrations"],
       setup: ["deps.get", "ecto.setup"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],

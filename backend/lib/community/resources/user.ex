@@ -3,6 +3,9 @@ defmodule Community.User do
     data_layer: AshPostgres.DataLayer,
     extensions: [
       AshGraphql.Resource
+    ],
+    authorizers: [
+      AshPolicyAuthorizer.Authorizer
     ]
 
   postgres do
@@ -13,6 +16,7 @@ defmodule Community.User do
   attributes do
     uuid_primary_key :id
 
+    attribute :admin, :boolean, allow_nil?: false, default: false, private?: true
     attribute :approved, :boolean, allow_nil?: false, default: false, private?: true
     attribute :firebase_id, :string, allow_nil?: false, private?: true
     attribute :owner, :boolean, allow_nil?: false, default: false, private?: true
@@ -30,7 +34,6 @@ defmodule Community.User do
 
     queries do
       get :get_user, :read
-      #read_one :current_user, :current_user
       list :list_users, :read
     end
 
@@ -38,6 +41,12 @@ defmodule Community.User do
       create :create_user, :create
       update :update_user, :update
       destroy :delete_user, :destroy
+    end
+  end
+
+  policies do
+    policy always() do
+      authorize_if actor_attribute_equals(:admin, true)
     end
   end
 end

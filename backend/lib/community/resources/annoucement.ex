@@ -3,6 +3,9 @@ defmodule Community.Announcement do
     data_layer: AshPostgres.DataLayer,
     extensions: [
       AshGraphql.Resource
+    ],
+    authorizers: [
+      AshPolicyAuthorizer.Authorizer
     ]
 
   postgres do
@@ -19,12 +22,6 @@ defmodule Community.Announcement do
     timestamps()
   end
 
-  actions do
-    read :read do
-      filter expr(renter_viewable == true or ^actor(:owner) == true)
-    end
-  end
-
   graphql do
     type :announcement
 
@@ -37,6 +34,29 @@ defmodule Community.Announcement do
       create :create_announcement, :create
       update :update_announcement, :update
       destroy :delete_announcement, :destroy
+    end
+  end
+
+  policies do
+    policy action_type(:read) do
+      # unless the actor is an approved user, forbid their request
+      forbid_unless actor_attribute_equals(:approved, true)
+      # if an announcement is renter_viewable, all approved users can view it
+      authorize_if attribute(:renter_viewable, true)
+      # or if the actor is an owner they can view all announcements
+      authorize_if actor_attribute_equals(:owner, true)
+    end
+
+    policy action_type(:create) do
+      authorize_if actor_attribute_equals(:admin, true)
+    end
+
+    policy action_type(:update) do
+      authorize_if actor_attribute_equals(:admin, true)
+    end
+
+    policy action_type(:destory) do
+      authorize_if actor_attribute_equals(:admin, true)
     end
   end
 end
