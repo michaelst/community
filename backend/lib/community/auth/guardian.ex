@@ -9,7 +9,7 @@ defmodule Community.Guardian do
   end
 
   def resource_from_claims(%{"sub" => firebase_id}) do
-    Api.get(User, [firebase_id: firebase_id])
+    Api.get(User, firebase_id: firebase_id)
     |> maybe_create_user(firebase_id)
   end
 

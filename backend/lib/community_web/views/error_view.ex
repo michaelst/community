@@ -14,3 +14,12 @@ defmodule CommunityWeb.ErrorView do
     %{errors: %{detail: Phoenix.Controller.status_message_from_template(template)}}
   end
 end
+
+defimpl AshGraphql.Error, for: Ash.Error.Forbidden do
+  def to_error(%Ash.Error.Forbidden{}) do
+    %{
+      message: "Forbidden",
+      code: "forbidden"
+    }
+  end
+end

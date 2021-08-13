@@ -11,7 +11,11 @@ defmodule Community.Guardian.KeyServerTest do
       "-----BEGIN CERTIFICATE-----\nMIIDHDCCAgSgAwIBAgIIGYayEONWtCowDQYJKoZIhvcNAQEFBQAwMTEvMC0GA1UE\nAxMmc2VjdXJldG9rZW4uc3lzdGVtLmdzZXJ2aWNlYWNjb3VudC5jb20wHhcNMjAx\nMTIxMDkyMDEwWhcNMjAxMjA3MjEzNTEwWjAxMS8wLQYDVQQDEyZzZWN1cmV0b2tl\nbi5zeXN0ZW0uZ3NlcnZpY2VhY2NvdW50LmNvbTCCASIwDQYJKoZIhvcNAQEBBQAD\nggEPADCCAQoCggEBAJu0sWa9LMwcFHxxahlxkFjexiooIAunPFLJw6Sfcxwd9LbW\nkYpg8+RXxjv7tmlnT2R7P1ncnDdFHA4LEpzcITpNE6cafLSdW7oOplqGKXFyVN6f\neiyLBqNglBVNr+pZ903f77wqxMITg6ShUJQXIGB8O7Pm2J5xucOVWBwZY7vt2ZgI\njNUs6v0hBsx6PWNBIvpXRZ9634h5ywsK5o8aRHzC0O58vE2A/TVjKR5OQ+au9wjj\nEn0YaFtOAncEgn+41YfQCK4srOf0KEcIag5PFi/ybYcFLUYp2LlrWyXU+QELg7t9\nlAYB76fOyiJGqqJ+qR497AlmLxJBmQmWu1o75KECAwEAAaM4MDYwDAYDVR0TAQH/\nBAIwADAOBgNVHQ8BAf8EBAMCB4AwFgYDVR0lAQH/BAwwCgYIKwYBBQUHAwIwDQYJ\nKoZIhvcNAQEFBQADggEBAGCDZAFbqoN7ghqtUwdyONoKSpOhXmQVETc4wWe+8zws\nCTg5hCynKgAienjSMYFbAcfKnrGi4qEAz/BZluaCE+cNL/rcd+cpaVOOORtppVvZ\n8PrIjtuv0UPsxPMT0k6rUiwEXwcZi0W5sGSmT2/XYBPWPaymxchhqzr3qlqspbza\nSOnBj4a30KY1KRMWeSnLc5szisFgnQQJqC0AAWn5leBi2rNJMnBO/PMVaJrRe5fY\nGoMVumAVydfVzA9D/eggz6F+XDL6XFUKPzD7wcq0SZbvuiDz4NMUKIWrfLxK0TKE\nyIWKD2sGsD3uClfI0AyEMpPwmEDag7I0TzXJcvyMSjs=\n-----END CERTIFICATE-----\n"
 
     Tesla.Mock.mock_global(fn
-      %{method: :get, url: "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com"} ->
+      %{
+        method: :get,
+        url:
+          "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com"
+      } ->
         %Tesla.Env{
           status: 200,
           body: %{

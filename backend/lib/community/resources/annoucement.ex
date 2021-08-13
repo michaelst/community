@@ -17,7 +17,7 @@ defmodule Community.Announcement do
     uuid_primary_key :id
 
     attribute :body, :string, allow_nil?: false
-    attribute :renter_viewable, :boolean, allow_nil?: false, default: false, private?: true
+    attribute :renter_viewable, :boolean, allow_nil?: false, default: false
 
     timestamps()
   end

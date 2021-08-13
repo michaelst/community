@@ -17,9 +17,9 @@ defmodule Community.User do
     uuid_primary_key :id
 
     attribute :admin, :boolean, allow_nil?: false, default: false, private?: true
-    attribute :approved, :boolean, allow_nil?: false, default: false, private?: true
+    attribute :approved, :boolean, allow_nil?: false, default: false
     attribute :firebase_id, :string, allow_nil?: false, private?: true
-    attribute :owner, :boolean, allow_nil?: false, default: false, private?: true
+    attribute :owner, :boolean, allow_nil?: false, default: false
     attribute :unit, :string
 
     timestamps()
@@ -38,9 +38,7 @@ defmodule Community.User do
     end
 
     mutations do
-      create :create_user, :create
       update :update_user, :update
-      destroy :delete_user, :destroy
     end
   end
 
