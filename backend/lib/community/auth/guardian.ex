@@ -13,10 +13,6 @@ defmodule Community.Guardian do
     |> maybe_create_user(firebase_id)
   end
 
-  def resource_from_claims(_claims) do
-    {:error, :reason_for_error}
-  end
-
   defp maybe_create_user({:ok, %User{} = user}, _firebase_id) do
     {:ok, user}
   end
