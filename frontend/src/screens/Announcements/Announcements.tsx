@@ -1,14 +1,13 @@
 import React from 'react'
-import { FlatList, Text, View } from 'react-native'
+import { FlatList, Text } from 'react-native'
 import { useQuery } from '@apollo/client'
 
 import { LIST_ANNOUNCEMENTS } from './queries'
-import Colors from '../../Colors'
+import Colors from '../../../Colors'
 import { ListAnnouncements } from './graphql/ListAnnouncements'
 
 const Announcements = () => {
-  const { loading, error, data } = useQuery<ListAnnouncements>(LIST_ANNOUNCEMENTS)
-  console.log(loading, error, data)
+  const { data } = useQuery<ListAnnouncements>(LIST_ANNOUNCEMENTS)
 
   return (
     <FlatList

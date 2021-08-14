@@ -20,9 +20,9 @@ import {
 
 import Colors from './Colors'
 
-import auth from '@react-native-firebase/auth'
-import Login from './screens/Login/Login'
-import Announcements from './screens/Announcements/Announcements'
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
+import Login from './src/screens/Login/Login'
+import Announcements from './src/screens/Announcements/Announcements'
 
 const Section: React.FC<{
   title: string
@@ -54,9 +54,9 @@ const Section: React.FC<{
 
 const App = () => {
   const [initializing, setInitializing] = useState(true)
-  const [user, setUser] = useState()
+  const [user, setUser] = useState<FirebaseAuthTypes.User | null>()
 
-  function onAuthStateChanged(user) {
+  function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {
     setUser(user)
     if (initializing) setInitializing(false)
   }
@@ -85,7 +85,7 @@ const App = () => {
         style={{
           backgroundColor: isDarkMode ? Colors.black : Colors.white,
         }}>
-          {!user ? <Login /> : <Announcements />}
+          <Announcements />
       </View>
     </SafeAreaView>
   )
