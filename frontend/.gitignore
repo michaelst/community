@@ -60,5 +60,7 @@ buck-out/
 
 google-services.json
 GoogleService-Info.plist
+firebase.config.ts
 
 .cache/
+privateConfig.json

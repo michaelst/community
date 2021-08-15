@@ -30,7 +30,11 @@ module.exports = {
   devtool: 'source-map',
   module: {
     rules: [
-      babelLoaderConfiguration
+      babelLoaderConfiguration,
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
     ],
   },
   plugins: [

@@ -40,6 +40,7 @@ defmodule Community.MixProject do
       {:ash_postgres, "~> 0.40"},
       {:ash, "~> 1.47.5"},
       {:castore, "~> 0.1"},
+      {:cors_plug, "~> 2.0"},
       {:ecto_sql, "~> 3.4"},
       {:guardian, "~> 2.1"},
       {:jason, "~> 1.0"},

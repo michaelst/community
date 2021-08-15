@@ -1,10 +1,16 @@
 import React from 'react'
-
-import { Text, View } from 'react-native'
+import firebase from 'firebase/app'
 
 const Login = () => {
   return (
-    <Text>hello world</Text>
+    <button
+        onClick={() => {
+          const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+          firebase.auth().signInWithPopup(googleAuthProvider);
+        }}
+      >
+        Sign in with Google
+      </button>
   )
 }
 
