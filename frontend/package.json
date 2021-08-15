@@ -17,6 +17,7 @@
     "@invertase/react-native-apple-authentication": "^2.1.2",
     "@react-native-firebase/app": "^12.5.0",
     "@react-native-firebase/auth": "^12.5.0",
+    "@react-navigation/native": "^6.0.2",
     "bootstrap": "^5.1.0",
     "firebase": "^8.9.1",
     "graphql": "^15.5.1",
@@ -24,6 +25,8 @@
     "react-apple-signin-auth": "^1.0.0",
     "react-bootstrap": "^2.0.0-beta.4",
     "react-native": "0.64.2",
+    "react-native-safe-area-context": "^3.3.0",
+    "react-native-screens": "^3.5.0",
     "react-native-web": "^0.17.1",
     "reactfire": "^3.0.0-rc.3"
   },

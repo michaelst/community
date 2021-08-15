@@ -1,113 +1,65 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
+import React from 'react'
+import 'firebase/auth'
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client'
+import { FirebaseAppProvider, useSigninCheck } from 'reactfire'
+import { NavigationContainer } from '@react-navigation/native'
+import { setContext } from '@apollo/client/link/context'
+import firebase from 'firebase/app'
 
-import React, { useEffect, useState } from 'react'
-import {
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native'
-
-import Colors from './Colors'
-
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import Login from './src/screens/Login/Login'
-import Announcements from './src/screens/Announcements/Announcements'
+import { config } from './firebase.config'
+import Main from './src/screens/Main'
 
-const Section: React.FC<{
-  title: string
-}> = ({ children, title }) => {
-  const isDarkMode = useColorScheme() === 'dark'
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  )
-}
+const httpLink = createHttpLink({
+  uri: 'https://f487df48a83b.ngrok.io/graphql',
+})
+
+const authLink = setContext(async (_, { headers }) => {
+  const user = firebase.auth().currentUser
+
+  if (user) {
+    const token = await user.getIdToken()
+
+    return {
+      headers: {
+        ...headers,
+        authorization: token ? `Bearer ${token}` : "",
+      }
+    }
+  } else {
+    return { headers }
+  }
+})
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache()
+})
 
 const App = () => {
-  const [initializing, setInitializing] = useState(true)
-  const [user, setUser] = useState<FirebaseAuthTypes.User | null>()
-
-  function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {
-    setUser(user)
-    if (initializing) setInitializing(false)
-  }
-
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
-    return subscriber // unsubscribe on unmount
-  }, [])
-
-  const isDarkMode = useColorScheme() === 'dark'
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  }
-
-  if (initializing) return null
-
-  if (!user) {
-    return <Login />
-  }
-
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <View
-        style={{
-          backgroundColor: isDarkMode ? Colors.black : Colors.white,
-        }}>
-          <Announcements />
-      </View>
-    </SafeAreaView>
+    <FirebaseAppProvider firebaseConfig={config}>
+      <ApolloProvider client={client}>
+        <NavigationContainer>
+          <AuthCheck />
+        </NavigationContainer>
+      </ApolloProvider>
+    </FirebaseAppProvider>
   )
 }
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-})
+const AuthCheck = () => {
+  const { status, data: signInCheckResult } = useSigninCheck()
+
+  if (status === 'loading') {
+    return null
+  }
+
+  if (signInCheckResult.signedIn === true) {
+    return <Main />
+  } else {
+    return <Login />
+  }
+}
 
 export default App
