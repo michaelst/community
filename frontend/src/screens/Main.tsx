@@ -5,6 +5,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
 
 import Colors from '../../Colors'
 import Announcements from './Announcements/Announcements'
@@ -17,15 +18,17 @@ const Main = () => {
   }
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <View
-        style={{
-          backgroundColor: isDarkMode ? Colors.black : Colors.white,
-        }}>
-          <Announcements />
-      </View>
-    </SafeAreaView>
+    <NavigationContainer>
+      <SafeAreaView style={backgroundStyle}>
+        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+        <View
+          style={{
+            backgroundColor: isDarkMode ? Colors.black : Colors.white,
+          }}>
+            <Announcements />
+        </View>
+      </SafeAreaView>
+    </NavigationContainer>
   )
 }
 

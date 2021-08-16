@@ -2,16 +2,15 @@ import React from 'react'
 import 'firebase/auth'
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client'
 import { FirebaseAppProvider, useSigninCheck } from 'reactfire'
-import { NavigationContainer } from '@react-navigation/native'
 import { setContext } from '@apollo/client/link/context'
 import firebase from 'firebase/app'
 
 import Login from './src/screens/Login/Login'
-import { config } from './firebase.config'
+import { firebaseConfig } from './firebase.config'
 import Main from './src/screens/Main'
 
 const httpLink = createHttpLink({
-  uri: 'https://f487df48a83b.ngrok.io/graphql',
+  uri: 'http://localhost:4000/graphql',
 })
 
 const authLink = setContext(async (_, { headers }) => {
@@ -38,11 +37,9 @@ const client = new ApolloClient({
 
 const App = () => {
   return (
-    <FirebaseAppProvider firebaseConfig={config}>
+    <FirebaseAppProvider firebaseConfig={firebaseConfig}>
       <ApolloProvider client={client}>
-        <NavigationContainer>
-          <AuthCheck />
-        </NavigationContainer>
+        <AuthCheck />
       </ApolloProvider>
     </FirebaseAppProvider>
   )

@@ -3,36 +3,55 @@ import {
   useColorScheme,
   View,
 } from 'react-native'
-import { FirebaseAppProvider, useSigninCheck } from 'reactfire'
+import { useUser } from 'reactfire'
 import 'firebase/auth'
-import Navbar from 'react-bootstrap/Navbar'
-import Nav from 'react-bootstrap/Nav'
 import Container from 'react-bootstrap/Container'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom"
 
 import Colors from '../../Colors'
-import Announcements from '../../src/screens/Announcements/Announcements'
-import privateConfig from '../../privateConfig.json'
+import Announcements from './Announcements/Announcements'
+import Header from './Header.web'
+import Residents from './Residents/Residents'
+import Documents from './Documents/Documents'
+import Profile from './Profile/Profile'
 
 const Main = () => {
+  const { data: user } = useUser()
   const isDarkMode = useColorScheme() === 'dark'
-  const colorScheme = useColorScheme() ?? 'light'
+
+  if (!user) {
+    return null
+  }
 
   return (
-    <View style={{ height: '100vh', backgroundColor: isDarkMode ? Colors.black : Colors.white }}>
-      <Navbar variant={colorScheme} bg={colorScheme} expand={"sm"}>
+    <Router>
+      <View style={{ height: '100vh', backgroundColor: isDarkMode ? Colors.dark : Colors.light }}>
+        <Header />
         <Container>
-          <Navbar.Brand href="#home">{privateConfig.communityName}</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
-            <Nav>
-              <Nav.Link href="#home">Home</Nav.Link>
-              <Nav.Link href="#link">Link</Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
+        <Switch>
+            <Route path="/residents">
+              <Residents />
+            </Route>
+            <Route path="/announcements">
+              <Announcements />
+            </Route>
+            <Route path="/documents">
+              <Documents />
+            </Route>
+            <Route path="/profile">
+              <Profile />
+            </Route>
+            <Route path="/">
+              <Announcements />
+            </Route>
+          </Switch>
         </Container>
-      </Navbar>
-      <Announcements />
-    </View>
+      </View>
+    </Router>
   )
 }
 

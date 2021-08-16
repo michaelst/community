@@ -28,12 +28,23 @@ module.exports = {
     filename: 'app-[hash].bundle.js',
   },
   devtool: 'source-map',
+  devServer: {
+    historyApiFallback: true
+  },
   module: {
     rules: [
       babelLoaderConfiguration,
       {
         test: /\.css$/i,
         use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
       },
     ],
   },
