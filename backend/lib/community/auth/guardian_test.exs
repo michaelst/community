@@ -3,15 +3,15 @@ defmodule Community.GuardianTest do
 
   test "user is created if they don't exist yet" do
     assert {:ok,
-            %Community.User{
+            %Community.Resident{
               id: id,
               approved: false,
               firebase_id: "test-id"
             }} = Community.Guardian.resource_from_claims(%{"sub" => "test-id"})
 
-    # same user is now returned
+    # same resident is now returned
     assert {:ok,
-            %Community.User{
+            %Community.Resident{
               id: ^id,
               approved: false,
               firebase_id: "test-id"

@@ -5,8 +5,8 @@ import { FirebaseAppProvider, useSigninCheck } from 'reactfire'
 import { setContext } from '@apollo/client/link/context'
 import firebase from 'firebase/app'
 
-import Login from './src/screens/Login/Login'
 import { firebaseConfig } from './firebase.config'
+import Login from './src/screens/Login'
 import Main from './src/screens/Main'
 
 const httpLink = createHttpLink({

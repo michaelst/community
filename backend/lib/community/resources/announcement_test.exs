@@ -3,24 +3,24 @@ defmodule Communiy.AnnouncementTest do
 
   alias Community.Announcement
   alias Community.Api
-  alias Community.User
+  alias Community.Resident
 
   describe "announcement policies" do
     setup do
       owner =
-        User
+        Resident
         |> Ash.Changeset.for_create(:create, %{owner: true, approved: true})
         |> Ash.Changeset.force_change_attribute(:firebase_id, "owner")
         |> Api.create!()
 
       renter =
-        User
+        Resident
         |> Ash.Changeset.for_create(:create, %{owner: false, approved: true})
         |> Ash.Changeset.force_change_attribute(:firebase_id, "renter")
         |> Api.create!()
 
       unapproved =
-        User
+        Resident
         |> Ash.Changeset.for_create(:create, %{owner: false, approved: false})
         |> Ash.Changeset.force_change_attribute(:firebase_id, "unapproved")
         |> Api.create!()

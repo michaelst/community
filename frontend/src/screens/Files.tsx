@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Documents = () => {
+const Files = () => {
   return (
     null
   )
 }
 
-export default Documents
+export default Files

@@ -8,7 +8,7 @@ defmodule Community.Repo.Migrations.MigrateResources1 do
   use Ecto.Migration
 
   def up do
-    create table(:user, primary_key: false) do
+    create table(:resident, primary_key: false) do
       add :id, :uuid, null: false, primary_key: true
       add :firebase_id, :text, null: false
       add :approved, :boolean, null: false, default: false
@@ -18,7 +18,7 @@ defmodule Community.Repo.Migrations.MigrateResources1 do
       add :updated_at, :utc_datetime_usec, null: false, default: fragment("now()")
     end
 
-    create unique_index(:user, [:firebase_id], name: "user_firebase_id_index")
+    create unique_index(:resident, [:firebase_id], name: "resident_firebase_id_index")
 
     create table(:announcement, primary_key: false) do
       add :id, :uuid, null: false, primary_key: true
@@ -32,8 +32,8 @@ defmodule Community.Repo.Migrations.MigrateResources1 do
   def down do
     drop table(:announcement)
 
-    drop_if_exists unique_index(:user, [:firebase_id], name: "user_firebase_id_index")
+    drop_if_exists unique_index(:resident, [:firebase_id], name: "resident_firebase_id_index")
 
-    drop table(:user)
+    drop table(:resident)
   end
 end

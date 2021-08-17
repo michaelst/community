@@ -1,36 +1,40 @@
-defmodule Communiy.UserTest do
+defmodule Communiy.ResidentTest do
   use Community.DataCase, async: true
 
   alias Community.Api
-  alias Community.User
+  alias Community.Resident
 
   describe "user policies" do
     setup do
       admin =
-        User
+        Resident
         |> Ash.Changeset.new()
         |> Ash.Changeset.for_create(:create, %{})
         |> Ash.Changeset.force_change_attribute(:firebase_id, "admin")
         |> Ash.Changeset.force_change_attribute(:admin, true)
         |> Api.create!()
 
-      user =
-        User
+      resident =
+        Resident
         |> Ash.Changeset.for_create(:create, %{})
-        |> Ash.Changeset.force_change_attribute(:firebase_id, "user")
+        |> Ash.Changeset.force_change_attribute(:firebase_id, "resident")
         |> Api.create!()
 
-      {:ok, %{admin: admin, user: user}}
+      {:ok, %{admin: admin, resident: resident}}
     end
 
-    test "only admin can update a user", %{admin: admin, user: user} do
-      assert {:error, %Ash.Error.Forbidden{}} =
-               user
-               |> Ash.Changeset.for_update(:update, %{approved: true})
-               |> Api.update(actor: user)
+    test "all residents can access current resident", %{resident: %{id: id} = resident} do
+      assert {:ok, %{id: ^id}} = Api.read_one(Resident, action: :current_resident, actor: resident)
+    end
 
-      assert {:ok, %Community.User{approved: true}} =
-               user
+    test "only admin can update a resident", %{admin: admin, resident: resident} do
+      assert {:error, %Ash.Error.Forbidden{}} =
+               resident
+               |> Ash.Changeset.for_update(:update, %{approved: true})
+               |> Api.update(actor: resident)
+
+      assert {:ok, %Community.Resident{approved: true}} =
+               resident
                |> Ash.Changeset.for_update(:update, %{approved: true})
                |> Api.update(actor: admin)
     end

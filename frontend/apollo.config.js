@@ -1,5 +1,5 @@
 module.exports = {
   client: {
-    includes: ['./screens/**/queries.ts'],
+    includes: ['./src/queries.ts'],
   },
 };

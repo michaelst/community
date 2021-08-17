@@ -8,14 +8,14 @@ defmodule Community.Repo.Migrations.MigrateResources2 do
   use Ecto.Migration
 
   def up do
-    alter table(:user) do
+    alter table(:resident) do
       modify :unit, :text, null: true
       add :admin, :boolean, null: false, default: false
     end
   end
 
   def down do
-    alter table(:user) do
+    alter table(:resident) do
       remove :admin
       modify :unit, :text, null: false
     end

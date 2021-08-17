@@ -12,10 +12,14 @@ import {
 } from "react-router-dom"
 
 import privateConfig from '../../privateConfig.json'
+import { useQuery } from '@apollo/client'
+import { CURRENT_RESIDENT } from '../queries'
+import { CurrentResident } from '../graphql/CurrentResident'
 
 const Header = () => {
   document.title = privateConfig.communityName
 
+  const { data } = useQuery<CurrentResident>(CURRENT_RESIDENT)
   const history = useHistory()
   const auth = useAuth()
   const colorScheme = useColorScheme() ?? 'light'
@@ -28,8 +32,8 @@ const Header = () => {
         <Navbar.Collapse className="justify-content-end" id="navbar-toggle">
           <Nav>
             <NavLink name="Announcements" path="/announcements" />
-            <NavLink name="Documents" path="/documents" />
-            <NavLink name="Residents" path="/residents" />
+            <NavLink name="Files" path="/files" />
+            {data?.currentResident.admin ? <NavLink name="Residents" path="/residents" /> : null}
             <NavDropdown title="Settings" id="settings">
               <NavDropdown.Item onClick={() => history.push("/profile")}>Profile</NavDropdown.Item>
               <NavDropdown.Divider />

@@ -6,6 +6,6 @@ defmodule Community.Api do
 
   resources do
     resource Community.Announcement
-    resource Community.User
+    resource Community.Resident
   end
 end

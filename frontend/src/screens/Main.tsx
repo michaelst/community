@@ -8,7 +8,7 @@ import {
 import { NavigationContainer } from '@react-navigation/native'
 
 import Colors from '../../Colors'
-import Announcements from './Announcements/Announcements'
+import Announcements from './Announcements'
 
 const Main = () => {
   const isDarkMode = useColorScheme() === 'dark'
