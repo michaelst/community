@@ -10,8 +10,12 @@
 export interface CurrentResident_currentResident {
   __typename: "Resident";
   id: string;
-  approved: boolean;
+  accountNumber: string | null;
   admin: boolean;
+  approved: boolean;
+  name: string | null;
+  owner: boolean;
+  unit: string | null;
 }
 
 export interface CurrentResident {

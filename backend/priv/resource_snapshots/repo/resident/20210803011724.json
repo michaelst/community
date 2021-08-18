@@ -80,7 +80,7 @@
   "identities": [
     {
       "base_filter": null,
-      "index_name": "user_firebase_id_index",
+      "index_name": "resident_firebase_id_index",
       "keys": [
         "firebase_id"
       ],
@@ -93,5 +93,5 @@
     "strategy": null
   },
   "repo": "Elixir.Community.Repo",
-  "table": "user"
+  "table": "resident"
 }

@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: ListResidents
+// GraphQL fragment: Resident
 // ====================================================
 
-export interface ListResidents_listResidents {
+export interface Resident {
   __typename: "Resident";
   id: string;
   accountNumber: string | null;
@@ -16,8 +16,4 @@ export interface ListResidents_listResidents {
   name: string | null;
   owner: boolean;
   unit: string | null;
-}
-
-export interface ListResidents {
-  listResidents: ListResidents_listResidents[];
 }

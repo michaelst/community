@@ -1,23 +1,42 @@
 import { gql } from "@apollo/client";
 
+const RESIDENT_FRAGMENT = gql`
+  fragment Resident on Resident {
+      id
+      accountNumber
+      admin
+      approved
+      name
+      owner
+      unit
+  }
+`
+
 export const CURRENT_RESIDENT = gql`
+  ${RESIDENT_FRAGMENT}
   query CurrentResident {
     currentResident {
-      id
-      approved
-      admin
+      ...Resident
     }
   }
 `;
 
 export const LIST_RESIDENTS = gql`
+  ${RESIDENT_FRAGMENT}
   query ListResidents {
-    listResidents {
-      id
-      admin
-      approved
-      owner
-      unit
+    listResidents(sort: [{ field: APPROVED, order: ASC }]) {
+      ...Resident
+    }
+  }
+`;
+
+export const UPDATE_RESIDENT = gql`
+  ${RESIDENT_FRAGMENT}
+  mutation UpdateResident($id: ID!, $approved: Boolean, $admin: Boolean, $owner: Boolean) {
+    updateResident(id: $id, input: { approved: $approved, admin: $admin, owner: $owner }) {
+      result {
+        ...Resident
+      }
     }
   }
 `;

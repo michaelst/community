@@ -10,13 +10,22 @@
       "type": "uuid"
     },
     {
-      "allow_nil?": false,
+      "allow_nil?": true,
       "default": "nil",
       "generated?": false,
-      "name": "firebase_id",
+      "name": "account_number",
       "primary_key?": false,
       "references": null,
       "type": "text"
+    },
+    {
+      "allow_nil?": false,
+      "default": "false",
+      "generated?": false,
+      "name": "admin",
+      "primary_key?": false,
+      "references": null,
+      "type": "boolean"
     },
     {
       "allow_nil?": false,
@@ -29,6 +38,24 @@
     },
     {
       "allow_nil?": false,
+      "default": "nil",
+      "generated?": false,
+      "name": "firebase_id",
+      "primary_key?": false,
+      "references": null,
+      "type": "text"
+    },
+    {
+      "allow_nil?": true,
+      "default": "nil",
+      "generated?": false,
+      "name": "name",
+      "primary_key?": false,
+      "references": null,
+      "type": "text"
+    },
+    {
+      "allow_nil?": false,
       "default": "false",
       "generated?": false,
       "name": "owner",
@@ -37,7 +64,7 @@
       "type": "boolean"
     },
     {
-      "allow_nil?": false,
+      "allow_nil?": true,
       "default": "nil",
       "generated?": false,
       "name": "unit",
@@ -67,11 +94,11 @@
   "base_filter": null,
   "check_constraints": [],
   "has_create_action": true,
-  "hash": "46FB03FAD3E27E09E728E0198F6F5FF38715578B08CAA530EF03E6F1AFBAD332",
+  "hash": "07926AF3366AF8C7B184640A989543F85127703ACA44A702C7DE19808D0B34B2",
   "identities": [
     {
       "base_filter": null,
-      "index_name": "user_firebase_id_index",
+      "index_name": "resident_firebase_id_index",
       "keys": [
         "firebase_id"
       ],
@@ -84,5 +111,5 @@
     "strategy": null
   },
   "repo": "Elixir.Community.Repo",
-  "table": "user"
+  "table": "resident"
 }

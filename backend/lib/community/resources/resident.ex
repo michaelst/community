@@ -16,9 +16,11 @@ defmodule Community.Resident do
   attributes do
     uuid_primary_key :id
 
+    attribute :account_number, :string
     attribute :admin, :boolean, allow_nil?: false, default: false
     attribute :approved, :boolean, allow_nil?: false, default: false
     attribute :firebase_id, :string, allow_nil?: false, private?: true
+    attribute :name, :string
     attribute :owner, :boolean, allow_nil?: false, default: false
     attribute :unit, :string
 
