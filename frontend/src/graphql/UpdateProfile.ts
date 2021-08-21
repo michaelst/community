@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: UpdateResident
+// GraphQL mutation operation: UpdateProfile
 // ====================================================
 
-export interface UpdateResident_updateResident_result {
+export interface UpdateProfile_updateProfile_result {
   __typename: "Resident";
   id: string;
   accountNumber: string | null;
@@ -18,21 +18,20 @@ export interface UpdateResident_updateResident_result {
   unit: string | null;
 }
 
-export interface UpdateResident_updateResident {
-  __typename: "UpdateResidentResult";
+export interface UpdateProfile_updateProfile {
+  __typename: "UpdateProfileResult";
   /**
    * The successful result of the mutation
    */
-  result: UpdateResident_updateResident_result | null;
+  result: UpdateProfile_updateProfile_result | null;
 }
 
-export interface UpdateResident {
-  updateResident: UpdateResident_updateResident | null;
+export interface UpdateProfile {
+  updateProfile: UpdateProfile_updateProfile | null;
 }
 
-export interface UpdateResidentVariables {
-  id: string;
-  admin?: boolean | null;
-  approved?: boolean | null;
-  owner?: boolean | null;
+export interface UpdateProfileVariables {
+  accountNumber?: string | null;
+  name?: string | null;
+  unit?: string | null;
 }

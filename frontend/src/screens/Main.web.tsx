@@ -12,6 +12,7 @@ import {
   Route,
 } from "react-router-dom"
 import { useQuery } from '@apollo/client'
+import { Col, Row } from 'react-bootstrap'
 
 import Colors from '../../Colors'
 import Announcements from './Announcements'
@@ -62,8 +63,21 @@ const Main = () => {
     )
   }
 
-  // TODO: request access
-  return null
+  return (
+    <div style={{
+      height: '100vh',
+      backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+      color: isDarkMode ? Colors.white : Colors.black
+    }}>
+      <Container className="p-5">
+        <Row className="justify-content-md-center">
+          <Col xs lg="6">
+            <Profile />
+          </Col>
+        </Row>
+      </Container>
+    </div>
+  )
 }
 
 export default Main

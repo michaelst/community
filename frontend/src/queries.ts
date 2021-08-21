@@ -33,19 +33,38 @@ export const LIST_RESIDENTS = gql`
 export const UPDATE_RESIDENT = gql`
   ${RESIDENT_FRAGMENT}
   mutation UpdateResident(
-    $id: ID!, 
-    $accountNumber: String
-    $admin: Boolean, 
-    $approved: Boolean, 
-    $name: String,
+    $id: ID! 
+    $admin: Boolean 
+    $approved: Boolean 
+    $owner: Boolean 
   ) {
     updateResident(
-      id: $id, 
+      id: $id 
+      input: { 
+        admin: $admin 
+        approved: $approved 
+        owner: $owner 
+      }
+    ) {
+      result {
+        ...Resident
+      }
+    }
+  }
+`;
+
+export const UPDATE_PROFILE = gql`
+  ${RESIDENT_FRAGMENT}
+  mutation UpdateProfile(
+    $accountNumber: String
+    $name: String
+    $unit: String
+  ) {
+    updateProfile(
       input: { 
         accountNumber: $accountNumber
-        admin: $admin, 
-        approved: $approved, 
-        name: $name,
+        name: $name
+        unit: $unit
       }
     ) {
       result {

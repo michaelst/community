@@ -8,6 +8,7 @@
 use Mix.Config
 
 config :community,
+  mix_env: Mix.env(),
   ecto_repos: [Community.Repo],
   ash_apis: [Community.Api]
 
