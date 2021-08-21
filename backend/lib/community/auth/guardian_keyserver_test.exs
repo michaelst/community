@@ -13,8 +13,7 @@ defmodule Community.Guardian.KeyServerTest do
     Tesla.Mock.mock_global(fn
       %{
         method: :get,
-        url:
-          "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com"
+        url: "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com"
       } ->
         %Tesla.Env{
           status: 200,

@@ -47,15 +47,7 @@ defmodule Community.Announcement do
       authorize_if actor_attribute_equals(:owner, true)
     end
 
-    policy action_type(:create) do
-      authorize_if actor_attribute_equals(:admin, true)
-    end
-
-    policy action_type(:update) do
-      authorize_if actor_attribute_equals(:admin, true)
-    end
-
-    policy action_type(:destory) do
+    policy [action_type(:create), action_type(:update), action_type(:destory)] do
       authorize_if actor_attribute_equals(:admin, true)
     end
   end

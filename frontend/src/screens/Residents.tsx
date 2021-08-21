@@ -19,8 +19,8 @@ const Residents = () => {
           <th>Name</th>
           <th>Unit #</th>
           <th>Account Number</th>
-          <th>Approved</th>
           <th>Owner/Resident</th>
+          <th>Approved</th>
           <th>Admin</th>
           <th>Actions</th>
         </tr>
@@ -32,8 +32,8 @@ const Residents = () => {
             <td>{resident.name}</td>
             <td>{resident.unit}</td>
             <td>{resident.accountNumber}</td>
-            <td>{resident.approved ? "true" : "false"}</td>
             <td>{resident.owner ? "Owner" : "Resident"}</td>
+            <td>{resident.approved ? "true" : "false"}</td>
             <td>{resident.admin ? "true" : "false"}</td>
             <td>
               <Dropdown>
@@ -43,15 +43,17 @@ const Residents = () => {
 
                 <Dropdown.Menu variant={colorScheme}>
                   <Dropdown.Item onClick={() => {
-                    updateResident({ variables: { id: resident.id, approved: !resident.approved } })
-                  }} >
-                    {resident.approved ? "Unapprove" : "Approve"}
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={() => {
                     updateResident({ variables: { id: resident.id, owner: !resident.owner } })
                   }} >
                     {resident.owner ? "Make Resident" : "Make Owner"}
                   </Dropdown.Item>
+
+                  <Dropdown.Item onClick={() => {
+                    updateResident({ variables: { id: resident.id, approved: !resident.approved } })
+                  }} >
+                    {resident.approved ? "Unapprove" : "Approve"}
+                  </Dropdown.Item>
+
                   <Dropdown.Item onClick={() => {
                     updateResident({ variables: { id: resident.id, admin: !resident.admin } })
                   }} >

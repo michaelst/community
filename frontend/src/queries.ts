@@ -24,7 +24,7 @@ export const CURRENT_RESIDENT = gql`
 export const LIST_RESIDENTS = gql`
   ${RESIDENT_FRAGMENT}
   query ListResidents {
-    listResidents(sort: [{ field: APPROVED, order: ASC }]) {
+    listResidents(sort: [{ field: APPROVED, order: ASC }, { field: NAME, order: ASC }]) {
       ...Resident
     }
   }
@@ -32,8 +32,22 @@ export const LIST_RESIDENTS = gql`
 
 export const UPDATE_RESIDENT = gql`
   ${RESIDENT_FRAGMENT}
-  mutation UpdateResident($id: ID!, $approved: Boolean, $admin: Boolean, $owner: Boolean) {
-    updateResident(id: $id, input: { approved: $approved, admin: $admin, owner: $owner }) {
+  mutation UpdateResident(
+    $id: ID!, 
+    $accountNumber: String
+    $admin: Boolean, 
+    $approved: Boolean, 
+    $name: String,
+  ) {
+    updateResident(
+      id: $id, 
+      input: { 
+        accountNumber: $accountNumber
+        admin: $admin, 
+        approved: $approved, 
+        name: $name,
+      }
+    ) {
       result {
         ...Resident
       }

@@ -37,6 +37,12 @@ defmodule Community.Resident do
     read :current_resident do
       filter id: actor(:id)
     end
+
+    update :update, primary?: true
+
+    update :update_profile do
+      accept [:name, :unit, :account_number]
+    end
   end
 
   graphql do
@@ -50,13 +56,17 @@ defmodule Community.Resident do
 
     mutations do
       update :update_resident, :update
+      update :update_profile, :update_profile, read_action: :current_resident, identity: false
     end
   end
 
   policies do
     policy always() do
-      authorize_if action(:current_resident)
+      # allow admin to do everything
       authorize_if actor_attribute_equals(:admin, true)
+      # allow resident to get/update their details
+      authorize_if action(:current_resident)
+      authorize_if action(:update_profile)
     end
   end
 end
