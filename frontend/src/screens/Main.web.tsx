@@ -12,7 +12,7 @@ import {
   Route,
 } from "react-router-dom"
 import { useQuery } from '@apollo/client'
-import { Col, Row } from 'react-bootstrap'
+import { Alert, Col, Row } from 'react-bootstrap'
 
 import Colors from '../../Colors'
 import Announcements from './Announcements'
@@ -72,6 +72,13 @@ const Main = () => {
       <Container className="p-5">
         <Row className="justify-content-md-center">
           <Col xs lg="6">
+            {data.currentResident.approved ?
+              null :
+              <Alert variant="warning">
+                Fill out your information below and click save.
+                An admin will need to review your information and approve you.
+              </Alert>
+            }
             <Profile />
           </Col>
         </Row>

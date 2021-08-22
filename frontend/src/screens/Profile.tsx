@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
-import { Alert, Button, Form } from 'react-bootstrap'
+import { Button, Form } from 'react-bootstrap'
 
 import { CURRENT_RESIDENT, UPDATE_PROFILE } from '../queries'
 import { CurrentResident } from '../graphql/CurrentResident'
@@ -16,7 +16,7 @@ const Profile = ({ onSave }: ProfileProps) => {
   const [unit, setUnit] = useState<string | null>()
   const [accountNumber, setAccountNumber] = useState<string | null>()
 
-  const { data } = useQuery<CurrentResident>(CURRENT_RESIDENT, {
+  useQuery<CurrentResident>(CURRENT_RESIDENT, {
     onCompleted: data => {
       setName(data.currentResident.name)
       setUnit(data.currentResident.unit)
@@ -38,14 +38,6 @@ const Profile = ({ onSave }: ProfileProps) => {
 
   return (
     <Form>
-      {data?.currentResident.approved ?
-        null :
-        <Alert variant="warning">
-          Fill out your information below and click save.
-          An admin will need to review your information and approve you.
-        </Alert>
-      }
-
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Name</Form.Label>
         <Form.Control
