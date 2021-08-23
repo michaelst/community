@@ -4,6 +4,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@ap
 import { FirebaseAppProvider, useSigninCheck } from 'reactfire'
 import { setContext } from '@apollo/client/link/context'
 import firebase from 'firebase/app'
+import { DateTime } from "luxon"
 
 import { firebaseConfig } from './firebase.config'
 import Login from './src/screens/Login'
@@ -30,9 +31,23 @@ const authLink = setContext(async (_, { headers }) => {
   }
 })
 
+const cache = new InMemoryCache({
+  typePolicies: {
+    Announcement: {
+      fields: {
+        insertedAt: {
+          read(timestamp) {
+            return DateTime.fromISO(timestamp, { zone: "UTC" })
+          }
+        }
+      }
+    }
+  }
+})
+
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache()
+  cache: cache
 })
 
 const App = () => {

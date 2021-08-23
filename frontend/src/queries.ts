@@ -74,11 +74,70 @@ export const UPDATE_PROFILE = gql`
   }
 `;
 
-export const LIST_ANNOUNCEMENTS = gql`
-  query ListAnnouncements {
-    listAnnouncements {
+const ANNOUNCEMENT_FRAGMENT = gql`
+  fragment Announcement on Announcement {
       id
       body
+      renterViewable
+      insertedAt
+  }
+`
+
+export const LIST_ANNOUNCEMENTS = gql`
+  ${ANNOUNCEMENT_FRAGMENT}
+  query ListAnnouncements {
+    listAnnouncements(sort: [{ field: INSERTED_AT, order: DESC }]) {
+      ...Announcement
     }
   }
+`;
+
+export const CREATE_ANNOUNCEMENT = gql`
+${ANNOUNCEMENT_FRAGMENT}
+mutation CreateAnnouncement(
+  $body: String 
+  $renterViewable: Boolean 
+) {
+  createAnnouncement(
+    input: { 
+      body: $body 
+      renterViewable: $renterViewable 
+    }
+  ) {
+    result {
+      ...Announcement
+    }
+  }
+}
+`;
+
+export const UPDATE_ANNOUNCEMENT = gql`
+${ANNOUNCEMENT_FRAGMENT}
+mutation UpdateAnnouncement(
+  $id: ID! 
+  $body: String 
+  $renterViewable: Boolean 
+) {
+  updateAnnouncement(
+    id: $id 
+    input: { 
+      body: $body 
+      renterViewable: $renterViewable 
+    }
+  ) {
+    result {
+      ...Announcement
+    }
+  }
+}
+`;
+
+export const DELETE_ANNOUNCEMENT = gql`
+mutation DeleteAnnouncement($id: ID!) { 
+  deleteAnnouncement(id: $id) {
+    result {
+      id
+    }
+  }
+}
 `;

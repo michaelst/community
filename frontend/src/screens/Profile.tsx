@@ -9,8 +9,6 @@ type ProfileProps = {
   onSave?: () => void
 }
 
-type Event = React.ChangeEvent<HTMLInputElement>
-
 const Profile = ({ onSave }: ProfileProps) => {
   const [name, setName] = useState<string | null>()
   const [unit, setUnit] = useState<string | null>()
@@ -43,7 +41,7 @@ const Profile = ({ onSave }: ProfileProps) => {
         <Form.Control
           type="text"
           value={name ?? ""}
-          onChange={(event: Event) => setName(event.target.value)}
+          onChange={(event: FormEvent) => setName(event.target.value)}
           placeholder="Name"
         />
 
@@ -51,7 +49,7 @@ const Profile = ({ onSave }: ProfileProps) => {
         <Form.Control
           type="text"
           value={unit ?? ""}
-          onChange={(event: Event) => setUnit(event.target.value)}
+          onChange={(event: FormEvent) => setUnit(event.target.value)}
           placeholder="Name"
         />
 
@@ -59,7 +57,7 @@ const Profile = ({ onSave }: ProfileProps) => {
         <Form.Control
           type="text"
           value={accountNumber ?? ""}
-          onChange={(event: Event) => setAccountNumber(event.target.value)}
+          onChange={(event: FormEvent) => setAccountNumber(event.target.value)}
           placeholder="FCS Account Number"
         />
       </Form.Group>

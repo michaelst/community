@@ -19,7 +19,8 @@ defmodule Community.Announcement do
     attribute :body, :string, allow_nil?: false
     attribute :renter_viewable, :boolean, allow_nil?: false, default: false
 
-    timestamps()
+    create_timestamp :inserted_at, private?: false
+    update_timestamp :updated_at, private?: false
   end
 
   graphql do

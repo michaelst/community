@@ -35,7 +35,7 @@ const Main = () => {
   if (data.currentResident.approved) {
     return (
       <Router>
-        <View style={{ height: '100vh', backgroundColor: isDarkMode ? Colors.dark : Colors.light }}>
+        <View style={{ minHeight: '100vh', backgroundColor: isDarkMode ? Colors.dark : Colors.light }}>
           <Header />
           <Container>
             <Switch>
@@ -65,7 +65,7 @@ const Main = () => {
 
   return (
     <div style={{
-      height: '100vh',
+      minHeight: '100vh',
       backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
       color: isDarkMode ? Colors.white : Colors.black
     }}>

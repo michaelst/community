@@ -4,17 +4,13 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: ListAnnouncements
+// GraphQL fragment: Announcement
 // ====================================================
 
-export interface ListAnnouncements_listAnnouncements {
+export interface Announcement {
   __typename: "Announcement";
   id: string;
   body: string;
   renterViewable: boolean;
   insertedAt: NaiveDateTime;
-}
-
-export interface ListAnnouncements {
-  listAnnouncements: ListAnnouncements_listAnnouncements[];
 }
