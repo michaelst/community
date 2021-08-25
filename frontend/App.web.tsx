@@ -1,12 +1,12 @@
 import React from 'react'
+import 'firebase/auth'
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client'
+import { FirebaseAppProvider, useSigninCheck } from 'reactfire'
 import { setContext } from '@apollo/client/link/context'
+import firebase from 'firebase/app'
 import { DateTime } from "luxon"
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
-import messaging from '@react-native-firebase/messaging'
 
-import { useState } from 'react'
-import { useEffect } from 'react'
+import { firebaseConfig } from './firebase.config'
 import Main from './src/screens/Main'
 import Login from './src/screens/Login'
 
@@ -15,7 +15,7 @@ const httpLink = createHttpLink({
 })
 
 const authLink = setContext(async (_, { headers }) => {
-  const user = auth().currentUser
+  const user = firebase.auth().currentUser
 
   if (user) {
     const token = await user.getIdToken()
@@ -51,37 +51,23 @@ const client = new ApolloClient({
 })
 
 const App = () => {
-  useEffect(() => {
-    messaging()
-      .subscribeToTopic('announcements')
-  }, [])
-
   return (
-    <ApolloProvider client={client}>
-      <AuthCheck />
-    </ApolloProvider>
+    <FirebaseAppProvider firebaseConfig={firebaseConfig}>
+      <ApolloProvider client={client}>
+        <AuthCheck />
+      </ApolloProvider>
+    </FirebaseAppProvider>
   )
 }
 
 const AuthCheck = () => {
-  const [initializing, setInitializing] = useState(true)
-  const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null)
+  const { status, data: signInCheckResult } = useSigninCheck()
 
-  // Handle user state changes
-  function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {
-    setUser(user)
-    if (initializing) setInitializing(false)
+  if (status === 'loading') {
+    return null
   }
 
-
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
-    return subscriber // unsubscribe on unmount
-  }, [])
-
-  if (initializing) return null
-
-  if (user) {
+  if (signInCheckResult.signedIn === true) {
     return <Main />
   } else {
     return <Login />

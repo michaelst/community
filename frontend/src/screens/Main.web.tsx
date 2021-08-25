@@ -19,7 +19,7 @@ import Announcements from './Announcements'
 import Header from './Header.web'
 import Residents from './Residents'
 import Files from './Files'
-import Profile from './Profile'
+import Profile from './Profile.web'
 import { CurrentResident } from '../graphql/CurrentResident'
 import { CURRENT_RESIDENT } from '../queries'
 

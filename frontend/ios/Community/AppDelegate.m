@@ -29,9 +29,39 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  if ([FIRApp defaultApp] == nil) {
-      [FIRApp configure];
+  // [START configure_firebase]
+  [FIRApp configure];
+  // [END configure_firebase]
+
+  // [START set_messaging_delegate]
+  [FIRMessaging messaging].delegate = self;
+  // [END set_messaging_delegate]
+
+  // Register for remote notifications. This shows a permission dialog on first run, to
+  // show the dialog at a more appropriate time move this registration accordingly.
+  // [START register_for_notifications]
+  if ([UNUserNotificationCenter class] != nil) {
+    // iOS 10 or later
+    // For iOS 10 display notification (sent via APNS)
+    [UNUserNotificationCenter currentNotificationCenter].delegate = self;
+    UNAuthorizationOptions authOptions = UNAuthorizationOptionAlert |
+        UNAuthorizationOptionSound | UNAuthorizationOptionBadge;
+    [[UNUserNotificationCenter currentNotificationCenter]
+        requestAuthorizationWithOptions:authOptions
+        completionHandler:^(BOOL granted, NSError * _Nullable error) {
+          // ...
+        }];
+  } else {
+    // iOS 10 notifications aren't available; fall back to iOS 8-9 notifications.
+    UIUserNotificationType allNotificationTypes =
+    (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
+    UIUserNotificationSettings *settings =
+    [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
+    [application registerUserNotificationSettings:settings];
   }
+
+  [application registerForRemoteNotifications];
+  // [END register_for_notifications]
   
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);
