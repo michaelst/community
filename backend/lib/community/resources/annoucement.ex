@@ -1,12 +1,9 @@
 defmodule Community.Announcement do
   use Ash.Resource,
     data_layer: AshPostgres.DataLayer,
-    extensions: [
-      AshGraphql.Resource
-    ],
-    authorizers: [
-      AshPolicyAuthorizer.Authorizer
-    ]
+    extensions: [AshGraphql.Resource],
+    authorizers: [AshPolicyAuthorizer.Authorizer],
+    notifiers: [Community.Notifiers.SendNotification]
 
   postgres do
     table "announcement"

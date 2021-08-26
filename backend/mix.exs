@@ -42,6 +42,7 @@ defmodule Community.MixProject do
       {:castore, "~> 0.1"},
       {:cors_plug, "~> 2.0"},
       {:ecto_sql, "~> 3.4"},
+      {:goth, "~> 1.3-rc"},
       {:guardian, "~> 2.1"},
       {:jason, "~> 1.0"},
       {:mint, "~> 1.0"},
