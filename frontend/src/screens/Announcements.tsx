@@ -1,20 +1,27 @@
 import React from 'react'
-import { FlatList, Text, View } from 'react-native'
+import { FlatList, StatusBar, Text, View } from 'react-native'
 import { useQuery } from '@apollo/client'
 import { useColorScheme } from 'react-native'
 
 import { ListAnnouncements, ListAnnouncements_listAnnouncements } from '../graphql/ListAnnouncements'
 import { LIST_ANNOUNCEMENTS } from '../queries'
 import Colors from '../../Colors'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import appStyles from '../utils/appStyles'
 
 const Announcements = () => {
+  const isDarkMode = useColorScheme() === 'dark'
   const { data } = useQuery<ListAnnouncements>(LIST_ANNOUNCEMENTS)
 
   return (
-    <FlatList
-      data={data?.listAnnouncements}
-      renderItem={props => <Announcement key={props.item.id} {...props} />}
-    />
+    <SafeAreaView>
+      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <FlatList
+        data={data?.listAnnouncements}
+        renderItem={props => <Announcement key={props.item.id} {...props} />}
+      />
+    </SafeAreaView>
+
   )
 }
 
@@ -23,20 +30,20 @@ type AnnouncementProps = {
 }
 
 const Announcement = ({ item }: AnnouncementProps) => {
-  const isDarkMode = useColorScheme() === 'dark'
+  const { styles } = appStyles()
 
   return (
-    <View
-      style={{
-        marginBottom: 8,
-        backgroundColor: isDarkMode ? Colors.black : Colors.white,
-      }}
-    >
-
-      <Text style={{ color: isDarkMode ? Colors.white : Colors.black }}>
-        {item.insertedAt.toRelative()}
-        {item.body}
-      </Text>
+    <View style={styles.card}>
+      <View style={styles.cardHeaderContainer}>
+        <Text style={styles.cardHeaderText}>
+          {item.insertedAt.toRelative()}
+        </Text>
+      </View>
+      <View style={styles.cardBodyContainer}>
+        <Text style={styles.cardBodyText}>
+          {item.body}
+        </Text>
+      </View>
     </View>
   )
 }
