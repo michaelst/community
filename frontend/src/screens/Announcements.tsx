@@ -1,17 +1,16 @@
 import React from 'react'
-import { FlatList, StatusBar, Text, View } from 'react-native'
+import { FlatList, RefreshControl, StatusBar, Text, View } from 'react-native'
 import { useQuery } from '@apollo/client'
 import { useColorScheme } from 'react-native'
 
 import { ListAnnouncements, ListAnnouncements_listAnnouncements } from '../graphql/ListAnnouncements'
 import { LIST_ANNOUNCEMENTS } from '../queries'
-import Colors from '../../Colors'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import appStyles from '../utils/appStyles'
 
 const Announcements = () => {
   const isDarkMode = useColorScheme() === 'dark'
-  const { data } = useQuery<ListAnnouncements>(LIST_ANNOUNCEMENTS)
+  const { data, loading, refetch } = useQuery<ListAnnouncements>(LIST_ANNOUNCEMENTS)
 
   return (
     <SafeAreaView>
@@ -19,6 +18,7 @@ const Announcements = () => {
       <FlatList
         data={data?.listAnnouncements}
         renderItem={props => <Announcement key={props.item.id} {...props} />}
+        refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
       />
     </SafeAreaView>
 

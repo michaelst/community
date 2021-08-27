@@ -63,7 +63,7 @@ const Announcement = ({ item, isAdmin }: AnnouncementProps) => {
           ? <UpdateAnnouncementForm announcement={item} onSave={() => setEdit(false)} />
           : (
             <>
-              {item.body}
+              {item.body.split('\n').map(str => <p>{str}</p>)}
 
               {isAdmin ?
                 <div className="mt-2 text-muted small">
