@@ -1,73 +1,46 @@
 import React from 'react'
-import 'firebase/auth'
-import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client'
-import { FirebaseAppProvider, useSigninCheck } from 'reactfire'
-import { setContext } from '@apollo/client/link/context'
-import firebase from 'firebase/app'
-import { DateTime } from "luxon"
+import { ApolloProvider } from '@apollo/client'
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
+import messaging from '@react-native-firebase/messaging'
 
-import { firebaseConfig } from './firebase.config'
-import Login from './src/screens/Login'
+import { useState } from 'react'
+import { useEffect } from 'react'
 import Main from './src/screens/Main'
-
-const httpLink = createHttpLink({
-  uri: 'http://localhost:4000/graphql',
-})
-
-const authLink = setContext(async (_, { headers }) => {
-  const user = firebase.auth().currentUser
-
-  if (user) {
-    const token = await user.getIdToken()
-
-    return {
-      headers: {
-        ...headers,
-        authorization: token ? `Bearer ${token}` : "",
-      }
-    }
-  } else {
-    return { headers }
-  }
-})
-
-const cache = new InMemoryCache({
-  typePolicies: {
-    Announcement: {
-      fields: {
-        insertedAt: {
-          read(timestamp) {
-            return DateTime.fromISO(timestamp, { zone: "UTC" })
-          }
-        }
-      }
-    }
-  }
-})
-
-const client = new ApolloClient({
-  link: authLink.concat(httpLink),
-  cache: cache
-})
+import Login from './src/screens/Login'
+import apolloClient from './src/utils/createApolloClient'
 
 const App = () => {
+  useEffect(() => {
+    messaging()
+      .subscribeToTopic('resident-announcements')
+  }, [])
+
   return (
-    <FirebaseAppProvider firebaseConfig={firebaseConfig}>
-      <ApolloProvider client={client}>
-        <AuthCheck />
-      </ApolloProvider>
-    </FirebaseAppProvider>
+    <ApolloProvider client={apolloClient}>
+      <AuthCheck />
+    </ApolloProvider>
   )
 }
 
 const AuthCheck = () => {
-  const { status, data: signInCheckResult } = useSigninCheck()
+  const [initializing, setInitializing] = useState(true)
+  const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null)
 
-  if (status === 'loading') {
-    return null
+  // Handle user state changes
+  function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {
+    setUser(user)
+    if (initializing) setInitializing(false)
   }
 
-  if (signInCheckResult.signedIn === true) {
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
+    return subscriber // unsubscribe on unmount
+  }, [])
+
+  if (initializing) return null
+
+  if (user) {
     return <Main />
   } else {
     return <Login />

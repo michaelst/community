@@ -7,6 +7,17 @@ defmodule Communiy.AnnouncementTest do
 
   describe "announcement policies" do
     setup do
+      Tesla.Mock.mock(fn
+        %{
+          method: :post,
+          url: "https://fcm.googleapis.com/v1/projects/" <> _
+        } ->
+          %Tesla.Env{
+            status: 200,
+            body: "ok"
+          }
+      end)
+
       owner =
         Resident
         |> Ash.Changeset.for_create(:create, %{owner: true, approved: true})

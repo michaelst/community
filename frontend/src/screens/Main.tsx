@@ -1,33 +1,43 @@
 import React from 'react'
-import {
-  SafeAreaView,
-  StatusBar,
-  useColorScheme,
-  View,
-} from 'react-native'
-import { NavigationContainer } from '@react-navigation/native'
+import { NavigationContainer, DefaultTheme, DarkTheme} from '@react-navigation/native'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
-import Colors from '../../Colors'
 import Announcements from './Announcements'
+import { useColorScheme } from 'react-native'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faCog, faDotCircle } from '@fortawesome/free-solid-svg-icons'
+
+const Tab = createBottomTabNavigator()
 
 const Main = () => {
   const isDarkMode = useColorScheme() === 'dark'
+  const baseTheme = isDarkMode ? DarkTheme : DefaultTheme
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const theme = {
+    ...baseTheme,
+    colors: {
+      ...baseTheme.colors,
+      muted: 'rgb(142, 142, 147)'
+    }
   }
 
   return (
-    <NavigationContainer>
-      <SafeAreaView style={backgroundStyle}>
-        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-            <Announcements />
-        </View>
-      </SafeAreaView>
+    <NavigationContainer theme={theme}>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          headerShown: false,
+          tabBarIcon: ({ color }) => {
+            if (route.name === 'Announcements') {
+              return <FontAwesomeIcon icon={faDotCircle} color={color} />
+            } else if (route.name === 'Settings') {
+              return <FontAwesomeIcon icon={faCog} color={color} />
+            }
+          }
+        })}
+      >
+        <Tab.Screen name="Announcements" component={Announcements} />
+        <Tab.Screen name="Settings" component={Announcements} />
+      </Tab.Navigator>
     </NavigationContainer>
   )
 }
