@@ -12,6 +12,8 @@ defmodule CommunityWeb.Router do
     plug Plug.Logger
   end
 
+  forward "/_health", CommunityWeb.HealthCheck
+
   scope "/" do
     pipe_through :api
 
