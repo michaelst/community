@@ -130,7 +130,7 @@ const CreateAnnouncementCard = () => {
   const isDarkMode = useColorScheme() === 'dark'
   const bodyState = useState("")
   const [body, setBody] = bodyState
-  const renterViewableState = useState(false)
+  const renterViewableState = useState(true)
   const [renterViewable, setRenterViewable] = renterViewableState
 
   const [createAnnouncement] = useMutation(CREATE_ANNOUNCEMENT, {
@@ -163,7 +163,7 @@ const CreateAnnouncementCard = () => {
           onSave={() => {
             createAnnouncement()
             setBody("")
-            setRenterViewable(false)
+            setRenterViewable(true)
           }} />
       </Card.Body>
     </Card>
