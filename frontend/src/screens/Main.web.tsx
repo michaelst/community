@@ -27,9 +27,7 @@ const Main = () => {
   const { data: user } = useUser()
   const isDarkMode = useColorScheme() === 'dark'
 
-  if (!data || !user) {
-    return null
-  }
+  if (!data || !user) return null
 
   if (data.currentResident.approved) {
     return (
@@ -46,9 +44,11 @@ const Main = () => {
               <Route path="/announcements">
                 <Announcements />
               </Route>
-              <Route path="/files">
-                <Files />
-              </Route>
+              {data.currentResident.owner || data.currentResident.admin ? (
+                <Route path="/files">
+                  <Files />
+                </Route>
+              ) : null}
               <Route path="/">
                 <Announcements />
               </Route>

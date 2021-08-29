@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react'
-import { FlatList, View } from 'react-native'
+import { FlatList } from 'react-native'
 import { useMutation, useQuery } from '@apollo/client'
 import { Button, Card, Col, Dropdown, Form, Modal, Row } from 'react-bootstrap'
 import { useColorScheme } from 'react-native'
@@ -9,7 +9,6 @@ import { ListAnnouncements, ListAnnouncements_listAnnouncements } from '../graph
 import { CREATE_ANNOUNCEMENT, CURRENT_RESIDENT, DELETE_ANNOUNCEMENT, LIST_ANNOUNCEMENTS, UPDATE_ANNOUNCEMENT } from '../queries'
 import { CurrentResident } from '../graphql/CurrentResident'
 import { useState } from 'react'
-import { useEffect } from 'react'
 
 const Announcements = () => {
   const { data } = useQuery<ListAnnouncements>(LIST_ANNOUNCEMENTS)
@@ -22,7 +21,8 @@ const Announcements = () => {
         {isAdmin ? <CreateAnnouncementCard /> : null}
         <FlatList
           data={data?.listAnnouncements}
-          renderItem={props => <Announcement key={props.item.id} isAdmin={isAdmin} {...props} />}
+          renderItem={props => <Announcement isAdmin={isAdmin} {...props} />}
+          keyExtractor={item => item.id}
         />
       </Col>
     </Row>
@@ -38,12 +38,6 @@ const Announcement = ({ item, isAdmin }: AnnouncementProps) => {
   const colorScheme = useColorScheme() ?? "light"
   const isDarkMode = useColorScheme() === 'dark'
   const [edit, setEdit] = useState(false)
-  const [relativeTime, setRelativeTime] = useState(item.insertedAt.toRelative())
-
-  useEffect(() => {
-    const interval = setInterval(() => setRelativeTime(item.insertedAt.toRelative()), 1000)
-    return () => clearInterval(interval)
-  }, [])
 
   return (
     <Card
@@ -52,7 +46,7 @@ const Announcement = ({ item, isAdmin }: AnnouncementProps) => {
       text={isDarkMode ? "white" : "dark"}
     >
       <Card.Header className="text-muted small d-flex justify-content-between align-items-center">
-        {relativeTime}
+        {item.insertedAt.toRelative()}
 
         {isAdmin
           ? <AdminActions announcement={item} setEdit={setEdit} />
@@ -63,7 +57,7 @@ const Announcement = ({ item, isAdmin }: AnnouncementProps) => {
           ? <UpdateAnnouncementForm announcement={item} onSave={() => setEdit(false)} />
           : (
             <>
-              {item.body.split('\n').map(str => <p>{str}</p>)}
+              {item.body.split('\n').map((str, i) => <p key={i}>{str}</p>)}
 
               {isAdmin ?
                 <div className="mt-2 text-muted small">

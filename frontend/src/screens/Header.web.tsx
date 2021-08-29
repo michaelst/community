@@ -41,7 +41,8 @@ const Header = () => {
           <Navbar.Collapse className="justify-content-end" id="navbar-toggle">
             <Nav>
               <NavLink name="Announcements" path="/announcements" />
-              <NavLink name="Files" path="/files" />
+              {data.currentResident.owner ? <NavLink name="Files" path="/files" /> : null}
+              {data.currentResident.owner ? <Nav.Link href="https://portal.hoaliving.com/Homeowner_v2/OwnerDashboard" target='_blank' active={false}>FCS Portal</Nav.Link> : null}
               {data.currentResident.admin ? <NavLink name="Residents" path="/residents" /> : null}
               <NavDropdown title="Settings" id="settings">
                 <NavDropdown.Item onClick={() => setShow(true)}>Profile</NavDropdown.Item>
