@@ -1,26 +1,21 @@
 import React, { useState } from 'react'
-import { useMutation, useQuery } from '@apollo/client'
-import { Button, Form } from 'react-bootstrap'
+import { useMutation } from '@apollo/client'
+import { Button, Form, OverlayTrigger, Popover, Tooltip } from 'react-bootstrap'
 
-import { CURRENT_RESIDENT, UPDATE_PROFILE } from '../queries'
-import { CurrentResident } from '../graphql/CurrentResident'
+import { UPDATE_PROFILE } from '../queries'
+import { CurrentResident_currentResident } from '../graphql/CurrentResident'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 
 type ProfileProps = {
+  resident: CurrentResident_currentResident
   onSave?: () => void
 }
 
-const Profile = ({ onSave }: ProfileProps) => {
-  const [name, setName] = useState<string | null>()
-  const [unit, setUnit] = useState<string | null>()
-  const [accountNumber, setAccountNumber] = useState<string | null>()
-
-  useQuery<CurrentResident>(CURRENT_RESIDENT, {
-    onCompleted: data => {
-      setName(data.currentResident.name)
-      setUnit(data.currentResident.unit)
-      setAccountNumber(data.currentResident.accountNumber)
-    }
-  })
+const Profile = ({ resident, onSave }: ProfileProps) => {
+  const [name, setName] = useState(resident.name)
+  const [unit, setUnit] = useState(resident.unit)
+  const [accountNumber, setAccountNumber] = useState(resident.accountNumber)
 
   const [updateProfile] = useMutation(UPDATE_PROFILE, {
     variables: {
@@ -35,7 +30,7 @@ const Profile = ({ onSave }: ProfileProps) => {
   }
 
   return (
-    <Form>
+    <Form autoComplete='off'>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Name</Form.Label>
         <Form.Control
@@ -43,6 +38,7 @@ const Profile = ({ onSave }: ProfileProps) => {
           value={name ?? ""}
           onChange={(event: FormEvent) => setName(event.target.value)}
           placeholder="Name"
+          autoComplete='off'
         />
 
         <Form.Label className="mt-3">Unit #</Form.Label>
@@ -50,15 +46,23 @@ const Profile = ({ onSave }: ProfileProps) => {
           type="text"
           value={unit ?? ""}
           onChange={(event: FormEvent) => setUnit(event.target.value)}
-          placeholder="Name"
+          placeholder="Unit"
+          autoComplete='off'
         />
 
-        <Form.Label className="mt-3">FCS Account Number</Form.Label>
+        <Form.Label className="mt-3">
+          FCS Account Number
+          <br />
+          <small className='text-muted'>
+            You can find your account number on the billing page of the <a href="https://portal.hoaliving.com/Homeowner_v2/Billing" target="_blank">FCS Portal</a>.
+          </small>
+        </Form.Label>
         <Form.Control
           type="text"
           value={accountNumber ?? ""}
           onChange={(event: FormEvent) => setAccountNumber(event.target.value)}
-          placeholder="FCS Account Number"
+          placeholder="FCS Account Number (type 'renter' if non-owner)"
+          autoComplete='off'
         />
       </Form.Group>
 

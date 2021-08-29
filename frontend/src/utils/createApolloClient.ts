@@ -1,10 +1,12 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import { DateTime } from 'luxon'
+
 import getFirebaseUser from './getFirebaseUser'
+import privateConfig from '../../privateConfig.json'
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:4000/graphql',
+  uri: privateConfig.apiUrl,
 })
 
 const authLink = setContext(async (_, { headers }) => {

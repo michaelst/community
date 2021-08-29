@@ -30,6 +30,8 @@ const Header = () => {
   const colorScheme = useColorScheme() ?? 'light'
   const isDarkMode = useColorScheme() === 'dark'
 
+  if (!data) return null
+
   return (
     <>
       <Navbar variant={colorScheme} bg={colorScheme} expand={"sm"}>
@@ -40,7 +42,7 @@ const Header = () => {
             <Nav>
               <NavLink name="Announcements" path="/announcements" />
               <NavLink name="Files" path="/files" />
-              {data?.currentResident.admin ? <NavLink name="Residents" path="/residents" /> : null}
+              {data.currentResident.admin ? <NavLink name="Residents" path="/residents" /> : null}
               <NavDropdown title="Settings" id="settings">
                 <NavDropdown.Item onClick={() => setShow(true)}>Profile</NavDropdown.Item>
                 <NavDropdown.Divider />
@@ -64,7 +66,7 @@ const Header = () => {
           <Offcanvas.Title>Profile</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <Profile onSave={() => setShow(false)}/>
+          <Profile resident={data.currentResident} onSave={() => setShow(false)}/>
         </Offcanvas.Body>
       </Offcanvas>
     </>

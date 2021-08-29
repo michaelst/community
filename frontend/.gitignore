@@ -64,3 +64,5 @@ firebase.config.ts
 
 .cache/
 privateConfig.json
+dist/
+.firebase/
