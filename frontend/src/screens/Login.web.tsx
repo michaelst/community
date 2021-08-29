@@ -6,7 +6,7 @@ const Login = () => {
   const auth = useAuth
 
   const uiConfig = {
-    signInFlow: 'popup',
+    signInFlow: 'redirect',
     signInOptions: [
       {
         provider: auth.EmailAuthProvider.PROVIDER_ID,
