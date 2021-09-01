@@ -1,11 +1,14 @@
 import React from 'react'
-
 import auth from '@react-native-firebase/auth'
 import { AppleButton, appleAuth } from '@invertase/react-native-apple-authentication'
+import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StatusBar, View } from 'react-native'
 import { useColorScheme } from 'react-native'
+
 import Colors from '../../Colors'
+import privateConfig from '../../privateConfig.json'
+import appStyles from '../utils/appStyles'
 
 async function onAppleButtonPress() {
   // Start the sign-in request
@@ -27,7 +30,21 @@ async function onAppleButtonPress() {
   return auth().signInWithCredential(appleCredential)
 }
 
+async function onGoogleButtonPress() {
+  GoogleSignin.configure({ webClientId: privateConfig.googleWebClientId })
+
+  // Get the users ID token
+  const { idToken } = await GoogleSignin.signIn();
+
+  // Create a Google credential with the token
+  const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+  // Sign-in the user with the credential
+  return auth().signInWithCredential(googleCredential);
+}
+
 const Login = () => {
+  const { baseUnit } = appStyles()
   const isDarkMode = useColorScheme() === 'dark'
 
   const backgroundStyle = {
@@ -40,16 +57,29 @@ const Login = () => {
       <View
         style={{
           backgroundColor: isDarkMode ? Colors.black : Colors.white,
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '100%'
         }}>
         <AppleButton
           buttonStyle={AppleButton.Style.WHITE}
           buttonType={AppleButton.Type.SIGN_IN}
+          cornerRadius={2}
           style={{
-            width: 160,
-            height: 45,
+            width: 222,
+            height: 40,
+            marginBottom: baseUnit * 2,
           }}
           onPress={() => onAppleButtonPress()}
         />
+        <GoogleSigninButton
+          style={{
+            width: 230,
+            height: 48,
+          }}
+          size={GoogleSigninButton.Size.Wide}
+          color={GoogleSigninButton.Color.Light}
+          onPress={onGoogleButtonPress} />
       </View>
     </SafeAreaView>
   )

@@ -24,13 +24,11 @@ const Unapproved = ({ resident }: Props) => {
       <Container className="p-5">
         <Row className="justify-content-md-center">
           <Col xs lg="6">
-            {resident.approved ?
-              null :
-              <Alert variant="warning">
-                Fill out your information below and click save.
-                An admin will need to review your information and approve you.
-              </Alert>
-            }
+            <Alert variant="warning">
+              Fill out your information below and click save.
+              An admin will need to review your information and approve you.
+            </Alert>
+            
             {edit
               ? <Profile resident={resident} onSave={() => setEdit(false)} />
               : <ViewOnlyProfile resident={resident} setEdit={setEdit} />}

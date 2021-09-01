@@ -83,7 +83,6 @@ const appStyles = () => {
       justifyContent: 'flex-start',
       margin: baseUnit,
       marginBottom: baseUnit * 2,
-      alignItems: 'center',
       backgroundColor: colors.card,
       borderRadius: baseUnit / 2
     },
@@ -102,15 +101,15 @@ const appStyles = () => {
       width: '100%',
       padding: baseUnit * 2,
     },
-    cardBodyText: {
-      fontSize: fontSize,
-      color: colors.text
-    },
     formInputText: {
-      textAlign: 'right',
       width: '100%',
       fontSize: fontSize,
-      color: colors.secondary
+      color: colors.text,
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: baseUnit / 2,
+      padding: baseUnit,
+      marginTop: baseUnit
     },
     sectionListContentContainerStyle: {
       paddingBottom: baseUnit * 4

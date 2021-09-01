@@ -1,5 +1,4 @@
 import React from 'react'
-import 'firebase/auth'
 import { ApolloProvider } from '@apollo/client'
 import { FirebaseAppProvider, useSigninCheck } from 'reactfire'
 

@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
 import { useMutation } from '@apollo/client'
-import { Button, Form, OverlayTrigger, Popover, Tooltip } from 'react-bootstrap'
+import { Button, Form } from 'react-bootstrap'
 
 import { UPDATE_PROFILE } from '../queries'
 import { CurrentResident_currentResident } from '../graphql/CurrentResident'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 
 type ProfileProps = {
   resident: CurrentResident_currentResident

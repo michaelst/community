@@ -3,7 +3,6 @@ import {
   useColorScheme,
   View,
 } from 'react-native'
-import { useUser } from 'reactfire'
 import 'firebase/auth'
 import Container from 'react-bootstrap/Container'
 import {
@@ -24,10 +23,9 @@ import Unapproved from './Unapproved.web'
 
 const Main = () => {
   const { data } = useQuery<CurrentResident>(CURRENT_RESIDENT)
-  const { data: user } = useUser()
   const isDarkMode = useColorScheme() === 'dark'
 
-  if (!data || !user) return null
+  if (!data) return null
 
   if (data.currentResident.approved) {
     return (
