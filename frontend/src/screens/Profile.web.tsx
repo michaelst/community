@@ -28,39 +28,45 @@ const Profile = ({ resident, onSave }: ProfileProps) => {
   }
 
   return (
-    <Form autoComplete='off'>
+    <Form autoComplete="off">
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Name</Form.Label>
         <Form.Control
           type="text"
-          value={name ?? ""}
+          value={name ?? ''}
           onChange={(event: FormEvent) => setName(event.target.value)}
           placeholder="Name"
-          autoComplete='off'
+          autoComplete="off"
         />
 
         <Form.Label className="mt-3">Unit #</Form.Label>
         <Form.Control
           type="text"
-          value={unit ?? ""}
+          value={unit ?? ''}
           onChange={(event: FormEvent) => setUnit(event.target.value)}
           placeholder="Unit"
-          autoComplete='off'
+          autoComplete="off"
         />
 
         <Form.Label className="mt-3">
           FCS Account Number
           <br />
-          <small className='text-muted'>
-            You can find your account number on the billing page of the <a href="https://portal.hoaliving.com/Homeowner_v2/Billing" target="_blank">FCS Portal</a>.
+          <small className="text-muted">
+            You can find your account number on the billing page of the{' '}
+            <a
+              href="https://portal.hoaliving.com/Homeowner_v2/Billing"
+              target="_blank">
+              FCS Portal
+            </a>
+            .
           </small>
         </Form.Label>
         <Form.Control
           type="text"
-          value={accountNumber ?? ""}
+          value={accountNumber ?? ''}
           onChange={(event: FormEvent) => setAccountNumber(event.target.value)}
           placeholder="FCS Account Number (type 'renter' if non-owner)"
-          autoComplete='off'
+          autoComplete="off"
         />
       </Form.Group>
 
@@ -68,8 +74,7 @@ const Profile = ({ resident, onSave }: ProfileProps) => {
         <Button
           variant="outline-primary"
           onClick={() => save()}
-          className="mt-3"
-        >
+          className="mt-3">
           Save
         </Button>
       </div>

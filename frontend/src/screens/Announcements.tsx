@@ -3,14 +3,18 @@ import { FlatList, RefreshControl, StatusBar, Text, View } from 'react-native'
 import { useQuery } from '@apollo/client'
 import { useColorScheme } from 'react-native'
 
-import { ListAnnouncements, ListAnnouncements_listAnnouncements } from '../graphql/ListAnnouncements'
+import {
+  ListAnnouncements,
+  ListAnnouncements_listAnnouncements
+} from '../graphql/ListAnnouncements'
 import { LIST_ANNOUNCEMENTS } from '../queries'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import appStyles from '../utils/appStyles'
 
 const Announcements = () => {
   const isDarkMode = useColorScheme() === 'dark'
-  const { data, loading, refetch } = useQuery<ListAnnouncements>(LIST_ANNOUNCEMENTS)
+  const { data, loading, refetch } =
+    useQuery<ListAnnouncements>(LIST_ANNOUNCEMENTS)
 
   return (
     <SafeAreaView>
@@ -18,10 +22,11 @@ const Announcements = () => {
       <FlatList
         data={data?.listAnnouncements}
         renderItem={props => <Announcement key={props.item.id} {...props} />}
-        refreshControl={<RefreshControl refreshing={loading} onRefresh={refetch} />}
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={refetch} />
+        }
       />
     </SafeAreaView>
-
   )
 }
 
@@ -40,9 +45,7 @@ const Announcement = ({ item }: AnnouncementProps) => {
         </Text>
       </View>
       <View style={styles.cardBodyContainer}>
-        <Text style={styles.cardBodyText}>
-          {item.body}
-        </Text>
+        <Text style={styles.text}>{item.body}</Text>
       </View>
     </View>
   )

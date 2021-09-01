@@ -11,8 +11,7 @@ import apolloClient from './src/utils/createApolloClient'
 
 const App = () => {
   useEffect(() => {
-    messaging()
-      .subscribeToTopic('resident-announcements')
+    messaging().subscribeToTopic('resident-announcements')
   }, [])
 
   return (
@@ -27,11 +26,10 @@ const AuthCheck = () => {
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null)
 
   // Handle user state changes
-  function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {
-    setUser(user)
+  function onAuthStateChanged(firebaseUser: FirebaseAuthTypes.User | null) {
+    setUser(firebaseUser)
     if (initializing) setInitializing(false)
   }
-
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged)

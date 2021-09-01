@@ -10,6 +10,8 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "format": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "checkTypes": "tsc --noEmit",
     "codegen": "apollo client:codegen --target typescript graphql --passthroughCustomScalars  --globalTypesFile=src/graphql/globalTypes.ts"
   },
   "dependencies": {

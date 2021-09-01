@@ -36,8 +36,8 @@ const ViewOnlyProfile = ({ resident, setEdit }: ViewOnlyProfileProps) => {
       <View style={styles.card}>
         <View style={styles.cardHeaderContainer}>
           <Text style={styles.cardHeaderText}>
-            Fill out your information below and click save.
-            An admin will need to review your information and approve you.
+            Fill out your information below and click save. An admin will need
+            to review your information and approve you.
           </Text>
         </View>
         <View style={styles.cardBodyContainer}>
@@ -58,10 +58,7 @@ const ViewOnlyProfile = ({ resident, setEdit }: ViewOnlyProfileProps) => {
         </View>
       </View>
 
-      <Button
-        title="Edit"
-        onPress={() => setEdit(true)}
-      />
+      <Button title="Edit" onPress={() => setEdit(true)} />
     </SafeAreaView>
   )
 }

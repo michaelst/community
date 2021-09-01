@@ -20,9 +20,7 @@ const App = () => {
 const AuthCheck = () => {
   const { status, data: signInCheckResult } = useSigninCheck()
 
-  if (status === 'loading') {
-    return null
-  }
+  if (status === 'loading') return null
 
   if (signInCheckResult.signedIn === true) {
     return <Main />

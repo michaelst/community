@@ -1,7 +1,13 @@
 import React from 'react'
 import auth from '@react-native-firebase/auth'
-import { AppleButton, appleAuth } from '@invertase/react-native-apple-authentication'
-import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin'
+import {
+  AppleButton,
+  appleAuth
+} from '@invertase/react-native-apple-authentication'
+import {
+  GoogleSignin,
+  GoogleSigninButton
+} from '@react-native-google-signin/google-signin'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StatusBar, View } from 'react-native'
 import { useColorScheme } from 'react-native'
@@ -14,7 +20,7 @@ async function onAppleButtonPress() {
   // Start the sign-in request
   const appleAuthRequestResponse = await appleAuth.performRequest({
     requestedOperation: appleAuth.Operation.LOGIN,
-    requestedScopes: [],
+    requestedScopes: []
   })
 
   // Ensure Apple returned a user identityToken
@@ -24,7 +30,10 @@ async function onAppleButtonPress() {
 
   // Create a Firebase credential from the response
   const { identityToken, nonce } = appleAuthRequestResponse
-  const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce)
+  const appleCredential = auth.AppleAuthProvider.credential(
+    identityToken,
+    nonce
+  )
 
   // Sign the user in with the credential
   return auth().signInWithCredential(appleCredential)
@@ -34,13 +43,13 @@ async function onGoogleButtonPress() {
   GoogleSignin.configure({ webClientId: privateConfig.googleWebClientId })
 
   // Get the users ID token
-  const { idToken } = await GoogleSignin.signIn();
+  const { idToken } = await GoogleSignin.signIn()
 
   // Create a Google credential with the token
-  const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+  const googleCredential = auth.GoogleAuthProvider.credential(idToken)
 
   // Sign-in the user with the credential
-  return auth().signInWithCredential(googleCredential);
+  return auth().signInWithCredential(googleCredential)
 }
 
 const Login = () => {
@@ -48,7 +57,7 @@ const Login = () => {
   const isDarkMode = useColorScheme() === 'dark'
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter
   }
 
   return (
@@ -68,18 +77,19 @@ const Login = () => {
           style={{
             width: 222,
             height: 40,
-            marginBottom: baseUnit * 2,
+            marginBottom: baseUnit * 2
           }}
           onPress={() => onAppleButtonPress()}
         />
         <GoogleSigninButton
           style={{
             width: 230,
-            height: 48,
+            height: 48
           }}
           size={GoogleSigninButton.Size.Wide}
           color={GoogleSigninButton.Color.Light}
-          onPress={onGoogleButtonPress} />
+          onPress={onGoogleButtonPress}
+        />
       </View>
     </SafeAreaView>
   )

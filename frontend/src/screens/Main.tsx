@@ -1,7 +1,11 @@
 import React from 'react'
 import { useColorScheme } from 'react-native'
 import { useQuery } from '@apollo/client'
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native'
+import {
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme
+} from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCog, faDotCircle } from '@fortawesome/free-solid-svg-icons'
@@ -41,8 +45,7 @@ const Main = () => {
                 return <FontAwesomeIcon icon={faCog} color={color} />
               }
             }
-          })}
-        >
+          })}>
           <Tab.Screen name="Announcements" component={Announcements} />
           <Tab.Screen name="Settings" component={Announcements} />
         </Tab.Navigator>

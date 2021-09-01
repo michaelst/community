@@ -6,7 +6,7 @@ import getFirebaseUser from './getFirebaseUser'
 import privateConfig from '../../privateConfig.json'
 
 const httpLink = createHttpLink({
-  uri: privateConfig.apiUrl,
+  uri: privateConfig.apiUrl
 })
 
 const authLink = setContext(async (_, { headers }) => {
@@ -18,12 +18,10 @@ const authLink = setContext(async (_, { headers }) => {
     return {
       headers: {
         ...headers,
-        authorization: token ? `Bearer ${token}` : "",
+        authorization: token ? `Bearer ${token}` : ''
       }
     }
-  } else {
-    return { headers }
-  }
+  } else return { headers }
 })
 
 const cache = new InMemoryCache({
@@ -32,7 +30,7 @@ const cache = new InMemoryCache({
       fields: {
         insertedAt: {
           read(timestamp) {
-            return DateTime.fromISO(timestamp, { zone: "UTC" })
+            return DateTime.fromISO(timestamp, { zone: 'UTC' })
           }
         }
       }

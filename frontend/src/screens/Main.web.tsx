@@ -1,15 +1,8 @@
 import React from 'react'
-import {
-  useColorScheme,
-  View,
-} from 'react-native'
+import { useColorScheme, View } from 'react-native'
 import 'firebase/auth'
 import Container from 'react-bootstrap/Container'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom"
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 
 import Colors from '../../Colors'
@@ -30,7 +23,11 @@ const Main = () => {
   if (data.currentResident.approved) {
     return (
       <Router>
-        <View style={{ minHeight: '100vh', backgroundColor: isDarkMode ? Colors.dark : Colors.light }}>
+        <View
+          style={{
+            minHeight: '100vh',
+            backgroundColor: isDarkMode ? Colors.dark : Colors.light
+          }}>
           <Header />
           <Container>
             <Switch>

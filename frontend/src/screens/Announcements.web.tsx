@@ -5,10 +5,20 @@ import { Button, Card, Col, Dropdown, Form, Modal, Row } from 'react-bootstrap'
 import { useColorScheme } from 'react-native'
 import EllipsisDropDownToggle from '../components/EllipsisDropDownToggle'
 
-import { ListAnnouncements, ListAnnouncements_listAnnouncements } from '../graphql/ListAnnouncements'
-import { CREATE_ANNOUNCEMENT, CURRENT_RESIDENT, DELETE_ANNOUNCEMENT, LIST_ANNOUNCEMENTS, UPDATE_ANNOUNCEMENT } from '../queries'
+import {
+  ListAnnouncements,
+  ListAnnouncements_listAnnouncements
+} from '../graphql/ListAnnouncements'
+import {
+  CREATE_ANNOUNCEMENT,
+  CURRENT_RESIDENT,
+  DELETE_ANNOUNCEMENT,
+  LIST_ANNOUNCEMENTS,
+  UPDATE_ANNOUNCEMENT
+} from '../queries'
 import { CurrentResident } from '../graphql/CurrentResident'
 import { useState } from 'react'
+import { CreateAnnouncement } from '../graphql/CreateAnnouncement'
 
 const Announcements = () => {
   const { data } = useQuery<ListAnnouncements>(LIST_ANNOUNCEMENTS)
@@ -35,7 +45,7 @@ type AnnouncementProps = {
 }
 
 const Announcement = ({ item, isAdmin }: AnnouncementProps) => {
-  const colorScheme = useColorScheme() ?? "light"
+  const colorScheme = useColorScheme() ?? 'light'
   const isDarkMode = useColorScheme() === 'dark'
   const [edit, setEdit] = useState(false)
 
@@ -43,30 +53,33 @@ const Announcement = ({ item, isAdmin }: AnnouncementProps) => {
     <Card
       className="mb-5"
       bg={colorScheme}
-      text={isDarkMode ? "white" : "dark"}
-    >
+      text={isDarkMode ? 'white' : 'dark'}>
       <Card.Header className="text-muted small d-flex justify-content-between align-items-center">
         {item.insertedAt.toRelative()}
 
-        {isAdmin
-          ? <AdminActions announcement={item} setEdit={setEdit} />
-          : null}
+        {isAdmin ? (
+          <AdminActions announcement={item} setEdit={setEdit} />
+        ) : null}
       </Card.Header>
       <Card.Body>
-        {edit
-          ? <UpdateAnnouncementForm announcement={item} onSave={() => setEdit(false)} />
-          : (
-            <>
-              {item.body.split('\n').map((str, i) => <p key={i}>{str}</p>)}
+        {edit ? (
+          <UpdateAnnouncementForm
+            announcement={item}
+            onSave={() => setEdit(false)}
+          />
+        ) : (
+          <>
+            {item.body.split('\n').map((str, i) => (
+              <p key={i}>{str}</p>
+            ))}
 
-              {isAdmin ?
-                <div className="mt-2 text-muted small">
-                  Visible to {item.renterViewable ? "all residents" : "owners"}
-                </div>
-                : null}
-            </>
-          )
-        }
+            {isAdmin ? (
+              <div className="mt-2 text-muted small">
+                Visible to {item.renterViewable ? 'all residents' : 'owners'}
+              </div>
+            ) : null}
+          </>
+        )}
       </Card.Body>
     </Card>
   )
@@ -76,7 +89,6 @@ type AdminActionsProps = {
   announcement: ListAnnouncements_listAnnouncements
   setEdit: React.Dispatch<React.SetStateAction<boolean>>
 }
-
 
 const AdminActions = ({ announcement, setEdit }: AdminActionsProps) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -96,21 +108,27 @@ const AdminActions = ({ announcement, setEdit }: AdminActionsProps) => {
 
         <Dropdown.Menu>
           <Dropdown.Item onClick={() => setEdit(true)}>Edit</Dropdown.Item>
-          <Dropdown.Item onClick={() => setShowDeleteModal(true)}>Delete</Dropdown.Item>
+          <Dropdown.Item onClick={() => setShowDeleteModal(true)}>
+            Delete
+          </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
 
       <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
         <Modal.Header closeButton />
-        <Modal.Body>Are you sure you want to delete this announcement?</Modal.Body>
+        <Modal.Body>
+          Are you sure you want to delete this announcement?
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
             Cancel
           </Button>
-          <Button variant="danger" onClick={() => {
-            deleteAnnouncement()
-            setShowDeleteModal(false)
-          }}>
+          <Button
+            variant="danger"
+            onClick={() => {
+              deleteAnnouncement()
+              setShowDeleteModal(false)
+            }}>
             Delete
           </Button>
         </Modal.Footer>
@@ -120,9 +138,9 @@ const AdminActions = ({ announcement, setEdit }: AdminActionsProps) => {
 }
 
 const CreateAnnouncementCard = () => {
-  const colorScheme = useColorScheme() ?? "light"
+  const colorScheme = useColorScheme() ?? 'light'
   const isDarkMode = useColorScheme() === 'dark'
-  const bodyState = useState("")
+  const bodyState = useState('')
   const [body, setBody] = bodyState
   const renterViewableState = useState(true)
   const [renterViewable, setRenterViewable] = renterViewableState
@@ -132,12 +150,21 @@ const CreateAnnouncementCard = () => {
       body: body,
       renterViewable: renterViewable
     },
-    update(cache, { data: { createAnnouncement } }) {
-      const data = cache.readQuery<ListAnnouncements | null>({ query: LIST_ANNOUNCEMENTS })
+    update(cache, { data }) {
+      const { createAnnouncement: createAnnouncementData }: CreateAnnouncement =
+        data
+
+      const cacheData = cache.readQuery<ListAnnouncements | null>({
+        query: LIST_ANNOUNCEMENTS
+      })
 
       cache.writeQuery({
         query: LIST_ANNOUNCEMENTS,
-        data: { listAnnouncements: [createAnnouncement.result].concat(data?.listAnnouncements) }
+        data: {
+          listAnnouncements: [createAnnouncementData?.result].concat(
+            cacheData?.listAnnouncements
+          )
+        }
       })
     }
   })
@@ -146,8 +173,7 @@ const CreateAnnouncementCard = () => {
     <Card
       className="mb-5"
       bg={colorScheme}
-      text={isDarkMode ? "white" : "dark"}
-    >
+      text={isDarkMode ? 'white' : 'dark'}>
       <Card.Header>New Announcement</Card.Header>
       <Card.Body>
         <AnnouncementForm
@@ -156,9 +182,10 @@ const CreateAnnouncementCard = () => {
           renterViewableState={renterViewableState}
           onSave={() => {
             createAnnouncement()
-            setBody("")
+            setBody('')
             setRenterViewable(true)
-          }} />
+          }}
+        />
       </Card.Body>
     </Card>
   )
@@ -169,7 +196,10 @@ type UpdateAnnouncementFormProps = {
   onSave: () => void
 }
 
-const UpdateAnnouncementForm = ({ announcement, onSave }: UpdateAnnouncementFormProps) => {
+const UpdateAnnouncementForm = ({
+  announcement,
+  onSave
+}: UpdateAnnouncementFormProps) => {
   const bodyState = useState(announcement.body)
   const [body] = bodyState
   const renterViewableState = useState(announcement.renterViewable)
@@ -183,14 +213,17 @@ const UpdateAnnouncementForm = ({ announcement, onSave }: UpdateAnnouncementForm
     }
   })
 
-  return <AnnouncementForm
-    actionVerb="Update"
-    bodyState={bodyState}
-    renterViewableState={renterViewableState}
-    onSave={() => {
-      updateAnnouncement()
-      onSave()
-    }} />
+  return (
+    <AnnouncementForm
+      actionVerb="Update"
+      bodyState={bodyState}
+      renterViewableState={renterViewableState}
+      onSave={() => {
+        updateAnnouncement()
+        onSave()
+      }}
+    />
+  )
 }
 
 type AnnouncementFormProps = {
@@ -200,7 +233,12 @@ type AnnouncementFormProps = {
   renterViewableState: [boolean, Dispatch<SetStateAction<boolean>>]
 }
 
-const AnnouncementForm = ({ actionVerb, bodyState, renterViewableState, onSave }: AnnouncementFormProps) => {
+const AnnouncementForm = ({
+  actionVerb,
+  bodyState,
+  renterViewableState,
+  onSave
+}: AnnouncementFormProps) => {
   const [body, setBody] = bodyState
   const [renterViewable, setRenterViewable] = renterViewableState
 
@@ -228,8 +266,7 @@ const AnnouncementForm = ({ actionVerb, bodyState, renterViewableState, onSave }
         <Button
           variant="outline-primary"
           onClick={() => onSave()}
-          className="mt-3"
-        >
+          className="mt-3">
           {actionVerb}
         </Button>
       </div>

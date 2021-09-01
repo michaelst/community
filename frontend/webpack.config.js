@@ -1,9 +1,9 @@
-const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpackEnv = process.env.NODE_ENV || 'development';
+const path = require('path')
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpackEnv = process.env.NODE_ENV || 'development'
 
-const {presets} = require(`${__dirname}/babel.config.js`);
+const { presets } = require(`${__dirname}/babel.config.js`)
 
 const babelLoaderConfiguration = {
   test: /\.(tsx|ts|js)$/,
@@ -13,19 +13,19 @@ const babelLoaderConfiguration = {
     options: {
       cacheDirectory: true,
       presets,
-      plugins: ['react-native-web'],
-    },
-  },
-};
+      plugins: ['react-native-web']
+    }
+  }
+}
 
 module.exports = {
   mode: webpackEnv,
   entry: {
-    app: path.join(__dirname, './index.web.js'),
+    app: path.join(__dirname, './index.web.js')
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'app-[hash].bundle.js',
+    filename: 'app-[hash].bundle.js'
   },
   devtool: 'source-map',
   devServer: {
@@ -36,25 +36,25 @@ module.exports = {
       babelLoaderConfiguration,
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
         use: [
           {
-            loader: 'file-loader',
-          },
-        ],
-      },
-    ],
+            loader: 'file-loader'
+          }
+        ]
+      }
+    ]
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, './index.html'),
       filename: 'index.html',
-      inject: 'body',
+      inject: 'body'
     }),
-    new webpack.HotModuleReplacementPlugin(),
+    new webpack.HotModuleReplacementPlugin()
   ],
   resolve: {
     extensions: [
@@ -65,10 +65,10 @@ module.exports = {
       '.web.jsx',
       '.web.js',
       '.jsx',
-      '.js',
-    ], 
+      '.js'
+    ],
     alias: Object.assign({
-      'react-native$': 'react-native-web',
-    }),
-  },
-};
+      'react-native$': 'react-native-web'
+    })
+  }
+}

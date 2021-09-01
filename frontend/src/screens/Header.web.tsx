@@ -6,10 +6,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import Container from 'react-bootstrap/Container'
-import {
-  useLocation,
-  useHistory
-} from "react-router-dom"
+import { useLocation, useHistory } from 'react-router-dom'
 
 import privateConfig from '../../privateConfig.json'
 import { useQuery } from '@apollo/client'
@@ -34,20 +31,37 @@ const Header = () => {
 
   return (
     <>
-      <Navbar variant={colorScheme} bg={colorScheme} expand={"sm"}>
+      <Navbar variant={colorScheme} bg={colorScheme} expand={'sm'}>
         <Container>
-          <Navbar.Brand href="#home">{privateConfig.communityName}</Navbar.Brand>
+          <Navbar.Brand href="#home">
+            {privateConfig.communityName}
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbar-toggle" />
           <Navbar.Collapse className="justify-content-end" id="navbar-toggle">
             <Nav>
               <NavLink name="Announcements" path="/announcements" />
-              {data.currentResident.owner || data.currentResident.admin ? <NavLink name="Files" path="/files" /> : null}
-              {data.currentResident.owner ? <Nav.Link href="https://portal.hoaliving.com/Homeowner_v2/OwnerDashboard" target='_blank' active={false}>FCS Portal</Nav.Link> : null}
-              {data.currentResident.admin ? <NavLink name="Residents" path="/residents" /> : null}
+              {data.currentResident.owner || data.currentResident.admin ? (
+                <NavLink name="Files" path="/files" />
+              ) : null}
+              {data.currentResident.owner ? (
+                <Nav.Link
+                  href="https://portal.hoaliving.com/Homeowner_v2/OwnerDashboard"
+                  target="_blank"
+                  active={false}>
+                  FCS Portal
+                </Nav.Link>
+              ) : null}
+              {data.currentResident.admin ? (
+                <NavLink name="Residents" path="/residents" />
+              ) : null}
               <NavDropdown title="Settings" id="settings">
-                <NavDropdown.Item onClick={() => setShow(true)}>Profile</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => setShow(true)}>
+                  Profile
+                </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item onClick={() => auth.signOut()}>Logout</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => auth.signOut()}>
+                  Logout
+                </NavDropdown.Item>
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>
@@ -60,14 +74,18 @@ const Header = () => {
         backdrop={false}
         style={{
           backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-          color: isDarkMode ? Colors.white : Colors.black,
-        }}
-      >
-        <Offcanvas.Header closeButton closeVariant={isDarkMode ? "white" : undefined}>
+          color: isDarkMode ? Colors.white : Colors.black
+        }}>
+        <Offcanvas.Header
+          closeButton
+          closeVariant={isDarkMode ? 'white' : undefined}>
           <Offcanvas.Title>Profile</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <Profile resident={data.currentResident} onSave={() => setShow(false)}/>
+          <Profile
+            resident={data.currentResident}
+            onSave={() => setShow(false)}
+          />
         </Offcanvas.Body>
       </Offcanvas>
     </>
@@ -75,7 +93,7 @@ const Header = () => {
 }
 
 type NavLinkProps = {
-  name: string,
+  name: string
   path: string
 }
 
@@ -85,7 +103,9 @@ const NavLink = ({ name, path }: NavLinkProps) => {
   const active = location.pathname === path
 
   return (
-    <Nav.Link className={active ? 'active' : ''} onClick={() => history.push(path)}>
+    <Nav.Link
+      className={active ? 'active' : ''}
+      onClick={() => history.push(path)}>
       {name}
     </Nav.Link>
   )

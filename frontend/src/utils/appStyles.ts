@@ -7,12 +7,12 @@ const appStyles = () => {
   const fontSize = 18
   const secondaryFontSize = 14
   const baseUnit = 8
-  
+
   const styles = StyleSheet.create({
     activityIndicator: {
       flex: 1,
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'center'
     },
     text: {
       color: colors.text,
@@ -28,18 +28,18 @@ const appStyles = () => {
       paddingRight: baseUnit
     },
     headerTitleText: {
-      color: colors.text, 
-      fontWeight: 'bold', 
+      color: colors.text,
+      fontWeight: 'bold',
       fontSize: fontSize
     },
     headerButtonText: {
-      color: colors.primary, 
-      fontSize: fontSize, 
+      color: colors.primary,
+      fontSize: fontSize,
       paddingLeft: baseUnit * 2,
       paddingRight: baseUnit * 2
     },
     smallButtonText: {
-      color: colors.primary, 
+      color: colors.primary,
       fontSize: secondaryFontSize,
       paddingTop: baseUnit,
       paddingLeft: baseUnit * 2,
@@ -95,11 +95,11 @@ const appStyles = () => {
     },
     cardHeaderText: {
       fontSize: fontSize * 0.8,
-      color: colors.muted,
+      color: colors.muted
     },
     cardBodyContainer: {
       width: '100%',
-      padding: baseUnit * 2,
+      padding: baseUnit * 2
     },
     formInputText: {
       width: '100%',
@@ -125,6 +125,6 @@ const appStyles = () => {
     fontSize: fontSize,
     baseUnit: baseUnit
   }
-} 
+}
 
 export default appStyles

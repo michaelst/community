@@ -5,5 +5,5 @@ export default {
   light: '#DAE1E7',
   dark: '#3B444B',
   darker: '#222',
-  black: '#000',
+  black: '#000'
 }

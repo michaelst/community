@@ -24,7 +24,7 @@ defmodule Community.Announcement do
     type :announcement
 
     queries do
-      get :get_announcement, :read
+      get :get_announcement, :read, allow_nil?: false
       list :list_announcements, :read
     end
 

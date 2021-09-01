@@ -16,22 +16,25 @@ const Unapproved = ({ resident }: Props) => {
   const [edit, setEdit] = useState(resident.name === null)
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-      color: isDarkMode ? Colors.white : Colors.black
-    }}>
+    <div
+      style={{
+        minHeight: '100vh',
+        backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+        color: isDarkMode ? Colors.white : Colors.black
+      }}>
       <Container className="p-5">
         <Row className="justify-content-md-center">
           <Col xs lg="6">
             <Alert variant="warning">
-              Fill out your information below and click save.
-              An admin will need to review your information and approve you.
+              Fill out your information below and click save. An admin will need
+              to review your information and approve you.
             </Alert>
-            
-            {edit
-              ? <Profile resident={resident} onSave={() => setEdit(false)} />
-              : <ViewOnlyProfile resident={resident} setEdit={setEdit} />}
+
+            {edit ? (
+              <Profile resident={resident} onSave={() => setEdit(false)} />
+            ) : (
+              <ViewOnlyProfile resident={resident} setEdit={setEdit} />
+            )}
           </Col>
         </Row>
       </Container>
@@ -57,10 +60,7 @@ const ViewOnlyProfile = ({ resident, setEdit }: ViewOnlyProfileProps) => {
       <p>{resident.accountNumber}</p>
 
       <div className="d-grid">
-        <Button
-          variant="outline-primary"
-          onClick={() => setEdit(true)}
-        >
+        <Button variant="outline-primary" onClick={() => setEdit(true)}>
           Edit
         </Button>
       </div>

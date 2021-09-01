@@ -32,9 +32,9 @@ const Residents = () => {
             <td>{resident.name}</td>
             <td>{resident.unit}</td>
             <td>{resident.accountNumber}</td>
-            <td>{resident.owner ? "Owner" : "Resident"}</td>
-            <td>{resident.approved ? "true" : "false"}</td>
-            <td>{resident.admin ? "true" : "false"}</td>
+            <td>{resident.owner ? 'Owner' : 'Resident'}</td>
+            <td>{resident.approved ? 'true' : 'false'}</td>
+            <td>{resident.admin ? 'true' : 'false'}</td>
             <td>
               <Dropdown>
                 <Dropdown.Toggle id="action-dropdown" variant="secondary">
@@ -42,22 +42,34 @@ const Residents = () => {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu variant={colorScheme}>
-                  <Dropdown.Item onClick={() => {
-                    updateResident({ variables: { id: resident.id, owner: !resident.owner } })
-                  }} >
-                    {resident.owner ? "Make Resident" : "Make Owner"}
+                  <Dropdown.Item
+                    onClick={() => {
+                      updateResident({
+                        variables: { id: resident.id, owner: !resident.owner }
+                      })
+                    }}>
+                    {resident.owner ? 'Make Resident' : 'Make Owner'}
                   </Dropdown.Item>
 
-                  <Dropdown.Item onClick={() => {
-                    updateResident({ variables: { id: resident.id, approved: !resident.approved } })
-                  }} >
-                    {resident.approved ? "Unapprove" : "Approve"}
+                  <Dropdown.Item
+                    onClick={() => {
+                      updateResident({
+                        variables: {
+                          id: resident.id,
+                          approved: !resident.approved
+                        }
+                      })
+                    }}>
+                    {resident.approved ? 'Unapprove' : 'Approve'}
                   </Dropdown.Item>
 
-                  <Dropdown.Item onClick={() => {
-                    updateResident({ variables: { id: resident.id, admin: !resident.admin } })
-                  }} >
-                    {resident.admin ? "Remove Admin" : "Make Admin"}
+                  <Dropdown.Item
+                    onClick={() => {
+                      updateResident({
+                        variables: { id: resident.id, admin: !resident.admin }
+                      })
+                    }}>
+                    {resident.admin ? 'Remove Admin' : 'Make Admin'}
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
