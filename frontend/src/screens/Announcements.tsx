@@ -9,7 +9,7 @@ import {
 } from '../graphql/ListAnnouncements'
 import { LIST_ANNOUNCEMENTS } from '../queries'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import appStyles from '../utils/appStyles'
+import useAppStyles from '../utils/useAppStyles'
 
 const Announcements = () => {
   const isDarkMode = useColorScheme() === 'dark'
@@ -35,7 +35,7 @@ type AnnouncementProps = {
 }
 
 const Announcement = ({ item }: AnnouncementProps) => {
-  const { styles } = appStyles()
+  const { styles } = useAppStyles()
 
   return (
     <View style={styles.card}>

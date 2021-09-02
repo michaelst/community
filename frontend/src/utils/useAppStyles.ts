@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
 import { useTheme } from '@react-navigation/native'
 
-const appStyles = () => {
+const useAppStyles = () => {
   const { colors }: any = useTheme()
 
   const fontSize = 18
@@ -16,6 +16,10 @@ const appStyles = () => {
     },
     text: {
       color: colors.text,
+      fontSize: fontSize
+    },
+    dangerText: {
+      color: colors.danger,
       fontSize: fontSize
     },
     secondaryText: {
@@ -67,7 +71,7 @@ const appStyles = () => {
       alignItems: 'center',
       flex: 1,
       flexDirection: 'row',
-      backgroundColor: '#dd2c00',
+      backgroundColor: colors.danger,
       justifyContent: 'flex-end'
     },
     row: {
@@ -127,4 +131,4 @@ const appStyles = () => {
   }
 }
 
-export default appStyles
+export default useAppStyles

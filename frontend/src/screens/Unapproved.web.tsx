@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container'
 import { Alert, Button, Col, Row } from 'react-bootstrap'
 
 import Colors from '../../Colors'
-import Profile from './Profile.web'
+import Profile from '../views/Profile.web'
 import { CurrentResident_currentResident } from '../graphql/CurrentResident'
 
 type Props = {

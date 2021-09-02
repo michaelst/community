@@ -1,7 +1,6 @@
 import React from 'react'
 import { ApolloProvider } from '@apollo/client'
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
-import messaging from '@react-native-firebase/messaging'
 
 import { useState } from 'react'
 import { useEffect } from 'react'
@@ -10,10 +9,6 @@ import Login from './src/screens/Login'
 import apolloClient from './src/utils/createApolloClient'
 
 const App = () => {
-  useEffect(() => {
-    messaging().subscribeToTopic('resident-announcements')
-  }, [])
-
   return (
     <ApolloProvider client={apolloClient}>
       <AuthCheck />

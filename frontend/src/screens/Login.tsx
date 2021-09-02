@@ -14,7 +14,7 @@ import { useColorScheme } from 'react-native'
 
 import Colors from '../../Colors'
 import privateConfig from '../../privateConfig.json'
-import appStyles from '../utils/appStyles'
+import useAppStyles from '../utils/useAppStyles'
 
 async function onAppleButtonPress() {
   // Start the sign-in request
@@ -53,7 +53,7 @@ async function onGoogleButtonPress() {
 }
 
 const Login = () => {
-  const { baseUnit } = appStyles()
+  const { baseUnit } = useAppStyles()
   const isDarkMode = useColorScheme() === 'dark'
 
   const backgroundStyle = {

@@ -14,7 +14,7 @@ import { CURRENT_RESIDENT } from '../queries'
 import { CurrentResident } from '../graphql/CurrentResident'
 import { Offcanvas } from 'react-bootstrap'
 import { useState } from 'react'
-import Profile from './Profile.web'
+import Profile from '../views/Profile.web'
 import Colors from '../../Colors'
 
 const Header = () => {
