@@ -1,20 +1,45 @@
-import React from 'react'
-import { FlatList, RefreshControl, StatusBar, Text, View } from 'react-native'
+import React, { useEffect } from 'react'
+import {
+  AppState,
+  AppStateStatus,
+  FlatList,
+  RefreshControl,
+  StatusBar,
+  Text,
+  View
+} from 'react-native'
 import { useQuery } from '@apollo/client'
 import { useColorScheme } from 'react-native'
+import messaging from '@react-native-firebase/messaging'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 import {
   ListAnnouncements,
   ListAnnouncements_listAnnouncements
 } from '../graphql/ListAnnouncements'
 import { LIST_ANNOUNCEMENTS } from '../queries'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import useAppStyles from '../utils/useAppStyles'
 
 const Announcements = () => {
   const isDarkMode = useColorScheme() === 'dark'
   const { data, loading, refetch } =
     useQuery<ListAnnouncements>(LIST_ANNOUNCEMENTS)
+
+  const handleAppStateChange = (state: AppStateStatus) => {
+    if (state === 'active') refetch()
+  }
+
+  useEffect(() => {
+    AppState.addEventListener('change', handleAppStateChange)
+    return () => {
+      AppState.removeEventListener('change', handleAppStateChange)
+    }
+  }, [])
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async () => refetch())
+    return unsubscribe
+  }, [])
 
   return (
     <SafeAreaView>
