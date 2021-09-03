@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { Dimensions, StyleSheet } from 'react-native'
 import { useTheme } from '@react-navigation/native'
 
 const useAppStyles = () => {
@@ -121,11 +121,31 @@ const useAppStyles = () => {
     flatlistContentContainerStyle: {
       paddingTop: baseUnit * 4,
       paddingBottom: baseUnit * 4
+    },
+    fullScreenContainer: {
+      height: '100%',
+      width: Dimensions.get('window').width,
+      padding: baseUnit * 5,
+      backgroundColor: colors.background,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    buttonContainer: {
+      marginTop: 10,
+      width: Dimensions.get('window').width / 1.8,
+      height: Dimensions.get('window').height / 20,
+      backgroundColor: 'white',
+      padding: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 2,
+      marginBottom: baseUnit * 2
     }
   })
 
   return {
     styles: styles,
+    colors: colors,
     fontSize: fontSize,
     baseUnit: baseUnit
   }

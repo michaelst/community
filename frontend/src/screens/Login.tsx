@@ -1,20 +1,19 @@
 import React from 'react'
 import auth from '@react-native-firebase/auth'
-import {
-  AppleButton,
-  appleAuth
-} from '@invertase/react-native-apple-authentication'
-import {
-  GoogleSignin,
-  GoogleSigninButton
-} from '@react-native-google-signin/google-signin'
+import { appleAuth } from '@invertase/react-native-apple-authentication'
+import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { StatusBar, View } from 'react-native'
+import { StatusBar, Text, TouchableOpacity, View } from 'react-native'
 import { useColorScheme } from 'react-native'
-
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faApple, faGoogle } from '@fortawesome/free-brands-svg-icons'
 import Colors from '../../Colors'
 import privateConfig from '../../privateConfig.json'
 import useAppStyles from '../utils/useAppStyles'
+import { useState } from 'react'
+import EmailLogin from './EmailLogin'
+import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 
 async function onAppleButtonPress() {
   // Start the sign-in request
@@ -53,8 +52,8 @@ async function onGoogleButtonPress() {
 }
 
 const Login = () => {
-  const { baseUnit } = useAppStyles()
   const isDarkMode = useColorScheme() === 'dark'
+  const [showEmailInput, setShowEmailInput] = useState(false)
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter
@@ -70,28 +69,47 @@ const Login = () => {
           alignItems: 'center',
           minHeight: '100%'
         }}>
-        <AppleButton
-          buttonStyle={AppleButton.Style.WHITE}
-          buttonType={AppleButton.Type.SIGN_IN}
-          cornerRadius={2}
-          style={{
-            width: 222,
-            height: 40,
-            marginBottom: baseUnit * 2
-          }}
+        {showEmailInput && <EmailLogin setShowEmailInput={setShowEmailInput} />}
+        <LoginButton
+          buttonTitle="Sign in with email"
+          icon={faEnvelope}
+          onPress={() => setShowEmailInput(true)}
+        />
+        <LoginButton
+          buttonTitle="Sign in with Apple"
+          icon={faApple}
           onPress={() => onAppleButtonPress()}
         />
-        <GoogleSigninButton
-          style={{
-            width: 230,
-            height: 48
-          }}
-          size={GoogleSigninButton.Size.Wide}
-          color={GoogleSigninButton.Color.Light}
-          onPress={onGoogleButtonPress}
+        <LoginButton
+          buttonTitle="Sign in with Google"
+          icon={faGoogle}
+          onPress={() => onGoogleButtonPress()}
         />
       </View>
     </SafeAreaView>
+  )
+}
+
+const LoginButton = ({
+  buttonTitle,
+  icon,
+  ...rest
+}: {
+  buttonTitle: string
+  icon: IconProp
+  onPress: () => void
+}) => {
+  const { styles, baseUnit, fontSize } = useAppStyles()
+
+  return (
+    <TouchableOpacity style={styles.buttonContainer} {...rest}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <FontAwesomeIcon icon={icon} size={fontSize * 0.8} />
+        <Text style={{ ...styles.text, color: 'black', marginLeft: baseUnit }}>
+          {buttonTitle}
+        </Text>
+      </View>
+    </TouchableOpacity>
   )
 }
 

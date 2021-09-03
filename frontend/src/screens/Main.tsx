@@ -2,11 +2,6 @@ import React, { useEffect } from 'react'
 import { StatusBar, useColorScheme } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useQuery } from '@apollo/client'
-import {
-  NavigationContainer,
-  DefaultTheme,
-  DarkTheme
-} from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import messaging from '@react-native-firebase/messaging'
@@ -23,7 +18,6 @@ const Tab = createBottomTabNavigator()
 const Main = () => {
   const { data } = useQuery<CurrentResident>(CURRENT_RESIDENT)
   const isDarkMode = useColorScheme() === 'dark'
-  const baseTheme = isDarkMode ? DarkTheme : DefaultTheme
 
   useEffect(() => {
     // alway subscribe to resident-annoucements
@@ -37,45 +31,32 @@ const Main = () => {
     }
   }, [data?.currentResident.owner])
 
-  const theme = {
-    ...baseTheme,
-    colors: {
-      ...baseTheme.colors,
-      muted: 'rgb(142, 142, 147)',
-      danger: 'rgb(221, 44, 0)'
-    }
-  }
-
   if (!data) return null
 
   if (data.currentResident.approved) {
     return (
-      <NavigationContainer theme={theme}>
-        <Tab.Navigator
-          screenOptions={({ route }) => ({
-            headerShown: false,
-            tabBarIcon: ({ color }) => {
-              if (route.name === 'Announcements') {
-                return <FontAwesomeIcon icon={faDotCircle} color={color} />
-              } else if (route.name === 'Settings') {
-                return <FontAwesomeIcon icon={faCog} color={color} />
-              }
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          headerShown: false,
+          tabBarIcon: ({ color }) => {
+            if (route.name === 'Announcements') {
+              return <FontAwesomeIcon icon={faDotCircle} color={color} />
+            } else if (route.name === 'Settings') {
+              return <FontAwesomeIcon icon={faCog} color={color} />
             }
-          })}>
-          <Tab.Screen name="Announcements" component={Announcements} />
-          <Tab.Screen name="Settings" component={Settings} />
-        </Tab.Navigator>
-      </NavigationContainer>
+          }
+        })}>
+        <Tab.Screen name="Announcements" component={Announcements} />
+        <Tab.Screen name="Settings" component={Settings} />
+      </Tab.Navigator>
     )
   }
 
   return (
-    <NavigationContainer theme={theme}>
-      <SafeAreaView>
-        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-        <Profile resident={data.currentResident} />
-      </SafeAreaView>
-    </NavigationContainer>
+    <SafeAreaView>
+      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <Profile resident={data.currentResident} />
+    </SafeAreaView>
   )
 }
 

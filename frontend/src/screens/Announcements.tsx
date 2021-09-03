@@ -30,9 +30,9 @@ const Announcements = () => {
   }
 
   useEffect(() => {
-    AppState.addEventListener('change', handleAppStateChange)
+    const subscriber = AppState.addEventListener('change', handleAppStateChange)
     return () => {
-      AppState.removeEventListener('change', handleAppStateChange)
+      subscriber.remove()
     }
   }, [])
 
