@@ -3,7 +3,7 @@ import auth from '@react-native-firebase/auth'
 import { appleAuth } from '@invertase/react-native-apple-authentication'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { StatusBar, Text, TouchableOpacity, View } from 'react-native'
+import { Platform, StatusBar, Text, TouchableOpacity, View } from 'react-native'
 import { useColorScheme } from 'react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faApple, faGoogle } from '@fortawesome/free-brands-svg-icons'
@@ -75,11 +75,12 @@ const Login = () => {
           icon={faEnvelope}
           onPress={() => setShowEmailInput(true)}
         />
-        <LoginButton
-          buttonTitle="Sign in with Apple"
-          icon={faApple}
-          onPress={() => onAppleButtonPress()}
-        />
+        {Platform.OS === 'ios' &&
+          <LoginButton
+            buttonTitle="Sign in with Apple"
+            icon={faApple}
+            onPress={() => onAppleButtonPress()}
+          />}
         <LoginButton
           buttonTitle="Sign in with Google"
           icon={faGoogle}

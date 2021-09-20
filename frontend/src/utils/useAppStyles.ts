@@ -135,7 +135,6 @@ const useAppStyles = () => {
       width: Dimensions.get('window').width / 1.8,
       height: Dimensions.get('window').height / 20,
       backgroundColor: 'white',
-      padding: 10,
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: 2,

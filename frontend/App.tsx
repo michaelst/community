@@ -23,6 +23,7 @@ const App = () => {
       danger: 'rgb(221, 44, 0)'
     }
   }
+  
   return (
     <ApolloProvider client={apolloClient}>
       <NavigationContainer theme={theme}>

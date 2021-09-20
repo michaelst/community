@@ -1,16 +1,15 @@
 FROM elixir:1.12-slim AS build
 
-RUN apt-get update \
-  && apt-get install -y --no-install-recommends build-essential software-properties-common \
-  && rm -rf /var/lib/apt/lists/*
-
 ENV MIX_ENV=prod \
     LANG=C.UTF-8
 
-WORKDIR /app
-
-RUN mix local.hex --force \
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends build-essential software-properties-common \
+  && rm -rf /var/lib/apt/lists/* \
+  && mix local.hex --force \
   && mix local.rebar --force
+
+WORKDIR /app
 
 COPY mix.exs mix.lock ./
 COPY config/config.exs config/prod.exs ./config/

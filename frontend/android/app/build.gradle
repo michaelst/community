@@ -110,7 +110,7 @@ def enableProguardInReleaseBuilds = false
  * give correct results when using with locales other than en-US.  Note that
  * this variant is about 6MiB larger per architecture than default.
  */
-def jscFlavor = 'org.webkit:android-jsc:+'
+def jscFlavor = 'org.webkit:android-jsc-intl:+'
 
 /**
  * Whether to enable the Hermes VM.
@@ -177,6 +177,10 @@ android {
 
         }
     }
+
+    dexOptions {
+      javaMaxHeapSize "4g"
+    }
 }
 
 dependencies {
@@ -207,7 +211,7 @@ dependencies {
         implementation jscFlavor
     }
 
-    implementation platform('com.google.firebase:firebase-bom:28.3.0')
+    implementation platform('com.google.firebase:firebase-bom:28.4.0')
 }
 
 // Run this once to be able to run the application with BUCK
