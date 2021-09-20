@@ -33,12 +33,14 @@ const ViewProfile = ({ resident, setEdit }: ProfileProps) => {
   return (
     <>
       <View style={styles.card}>
-        <View style={styles.cardHeaderContainer}>
-          <Text style={styles.cardHeaderText}>
-            Fill out your information below and click save. An admin will need
-            to review your information and approve you.
-          </Text>
-        </View>
+        {!resident.approved &&
+          <View style={styles.cardHeaderContainer}>
+            <Text style={styles.cardHeaderText}>
+              Fill out your information below and click save. An admin will need
+              to review your information and approve you.
+            </Text>
+          </View>
+        }
         <View style={styles.cardBodyContainer}>
           <View style={{ marginBottom: baseUnit * 2 }}>
             <Text style={styles.headerTitleText}>Name</Text>

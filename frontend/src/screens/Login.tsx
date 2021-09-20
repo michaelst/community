@@ -106,7 +106,7 @@ const LoginButton = ({
     <TouchableOpacity style={styles.buttonContainer} {...rest}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <FontAwesomeIcon icon={icon} size={fontSize * 0.8} />
-        <Text style={{ ...styles.text, color: 'black', marginLeft: baseUnit }}>
+        <Text style={{ ...styles.text, color: 'black', marginLeft: baseUnit }} allowFontScaling={false}>
           {buttonTitle}
         </Text>
       </View>
