@@ -42,6 +42,7 @@ defmodule Community.Resident do
 
     update :update_profile do
       accept [:name, :unit, :account_number]
+      change Community.Resident.Changes.ApproveAppReviewer
     end
   end
 

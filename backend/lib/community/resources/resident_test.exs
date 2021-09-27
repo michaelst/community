@@ -56,12 +56,21 @@ defmodule Communiy.ResidentTest do
                })
                |> Api.update(actor: resident)
 
-      assert {:ok, %Community.Resident{name: "Michael", unit: "1", account_number: "12345"}} =
+      assert {:ok, %Community.Resident{name: "Michael", unit: "1", account_number: "12345", approved: false}} =
                resident
                |> Ash.Changeset.for_update(:update_profile, %{
                  name: "Michael",
                  unit: "1",
                  account_number: "12345"
+               })
+               |> Api.update(actor: resident)
+    end
+
+    test "app reviewer password auto approves resident", %{resident: resident} do
+      assert {:ok, %Community.Resident{approved: true}} =
+               resident
+               |> Ash.Changeset.for_update(:update_profile, %{
+                 account_number: "password"
                })
                |> Api.update(actor: resident)
     end

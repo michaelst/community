@@ -8,9 +8,16 @@ gcp_credentials =
 
 gcp_project_id = gcp_credentials["project_id"]
 
+app_reviewer_password =
+  case config_env() do
+    :prod -> System.fetch_env!("APP_REVIEWER_PASSWORD")
+    _env -> "password"
+  end
+
 config :community,
   gcp_credentials: gcp_credentials,
-  gcp_project_id: gcp_project_id
+  gcp_project_id: gcp_project_id,
+  app_reviewer_password: app_reviewer_password
 
 config :community, Community.Guardian, issuer: "https://securetoken.google.com/#{gcp_project_id}"
 
